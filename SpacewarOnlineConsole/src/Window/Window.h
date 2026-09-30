@@ -19,7 +19,8 @@ private:
 	CHAR_INFO _buffer[_SCREEN_WIDTH][_SCREEN_HEIGHT];
 
 	//console handle
-	HANDLE _consoleHandle;
+	HANDLE _consoleOutputHandle;
+	HANDLE _consoleInputHandle;
 
 	KeyboardInputData _inputs;
 
@@ -32,4 +33,8 @@ public:
 	void BeginFrame();
 	void SetChar(int x, int y, CHAR_INFO caracterInfo);
 	void EndFrame();
+
+	//getters
+	inline const KeyboardInputData& GetInputs() { return _inputs; }
+
 };

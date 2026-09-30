@@ -1,5 +1,4 @@
 #pragma once
-#include <stdexcept>
+#include "src/WindowsException.h"
 
-
-#define THROW_IF_FAILED(X, msg)  if (X==FALSE) throw std::logic_error(#msg)
+#define THROW_IF_FAILED(X, msg)  if (X==FALSE) throw WindowsException(#msg)

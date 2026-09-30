@@ -157,6 +157,7 @@
     <ClInclude Include="src\Enums.h" />
     <ClInclude Include="src\Game\Game.h" />
     <ClInclude Include="src\Macros.h" />
+    <ClInclude Include="src\WindowsException.h" />
     <ClInclude Include="src\Window\Inputs\KeyboardInputData.h" />
     <ClInclude Include="src\Window\Window.h" />
     <ClInclude Include="src\Maths\Vector2.h" />

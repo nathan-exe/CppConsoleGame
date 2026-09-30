@@ -2,30 +2,31 @@
 #include <array>
 #include <vector>
 #include <src/Macros.h>
+#include <iostream>
 
 GameWindow::GameWindow()  : 
 	_screenRegion( 0, 0, _SCREEN_WIDTH - 1, _SCREEN_HEIGHT - 1 )
 {
-	//retrieve a handle to the console
-	_consoleHandle = (HANDLE)GetStdHandle(STD_OUTPUT_HANDLE);
+	//retrieve handles to the console
+	_consoleOutputHandle = (HANDLE)GetStdHandle(STD_OUTPUT_HANDLE);
+	_consoleInputHandle = (HANDLE)GetStdHandle(STD_INPUT_HANDLE);
 	
 	//enable keyboard inputs
     THROW_IF_FAILED(
-        SetConsoleMode(_consoleHandle, ENABLE_WINDOW_INPUT | ENABLE_PROCESSED_INPUT),
+        SetConsoleMode(_consoleInputHandle, ENABLE_WINDOW_INPUT | ENABLE_PROCESSED_INPUT),
         "Couldn't set console mode.");
 }
 
-
-
 void GameWindow::Update() {
+
     //fetch number of input events
     DWORD inputBufferSize = 0;
     THROW_IF_FAILED(
-        GetNumberOfConsoleInputEvents(_consoleHandle, &inputBufferSize),
+        GetNumberOfConsoleInputEvents(_consoleInputHandle, &inputBufferSize),
         "couldn't get number of console events.");
-    
+
     if (inputBufferSize == 0)
-        return; // avoids blocking on empty input buffers
+        return; // avoid blocking on empty input buffers
 
     //allocate input buffer
     std::vector<INPUT_RECORD> inputBuffer(inputBufferSize);
@@ -33,7 +34,7 @@ void GameWindow::Update() {
     //fetch console inputs into input buffer
     DWORD inputReadsCount;
     THROW_IF_FAILED(
-        ReadConsoleInput(_consoleHandle, inputBuffer.data(), inputBufferSize, &inputReadsCount)
+        ReadConsoleInput(_consoleInputHandle, inputBuffer.data(), inputBufferSize, &inputReadsCount)
         , "couldn't read console input.");
 
     //foreach input event
@@ -50,7 +51,8 @@ void GameWindow::Update() {
 #pragma region Display
 void GameWindow::BeginFrame()
 {
-	ReadConsoleOutput(_consoleHandle, (CHAR_INFO*)_buffer, _SCREEN_SIZE, _SCREEN_COORD, &_screenRegion);
+	ReadConsoleOutput(_consoleOutputHandle, (CHAR_INFO*)_buffer, _SCREEN_SIZE, _SCREEN_COORD, &_screenRegion);
+    //todo : clear buffer ???
 }
 
 void GameWindow::SetChar(int x, int y, CHAR_INFO caracterInfo) {
@@ -58,7 +60,7 @@ void GameWindow::SetChar(int x, int y, CHAR_INFO caracterInfo) {
 }
 
 void GameWindow::EndFrame() {
-	WriteConsoleOutput(_consoleHandle, (CHAR_INFO*)_buffer, _SCREEN_SIZE,
+	WriteConsoleOutput(_consoleOutputHandle, (CHAR_INFO*)_buffer, _SCREEN_SIZE,
         _SCREEN_COORD, &_screenRegion);
 }
 #pragma endregion
