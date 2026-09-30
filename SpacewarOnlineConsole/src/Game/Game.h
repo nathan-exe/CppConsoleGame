@@ -9,7 +9,7 @@ public :
 	void Run();
 
 private : 
-	Window _window;
+	GameWindow _window;
 	std::vector<Entity> _entities;
 
 };

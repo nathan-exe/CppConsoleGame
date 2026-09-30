@@ -7,7 +7,7 @@ class Entity
 {
 public :
 	virtual void Update(float deltatime) = 0;
-	virtual void Draw(Window& rWindow) = 0;
+	virtual void Draw(GameWindow& rWindow) = 0;
 	
 private :
 
