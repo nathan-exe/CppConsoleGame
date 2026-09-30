@@ -1,6 +1,7 @@
 #include "Window.h"
 #include <array>
 #include <vector>
+#include <src/Macros.h>
 
 GameWindow::GameWindow()  : 
 	_screenRegion( 0, 0, _SCREEN_WIDTH - 1, _SCREEN_HEIGHT - 1 )
@@ -9,7 +10,9 @@ GameWindow::GameWindow()  :
 	_consoleHandle = (HANDLE)GetStdHandle(STD_OUTPUT_HANDLE);
 	
 	//enable keyboard inputs
-    SetConsoleMode(_consoleHandle, ENABLE_WINDOW_INPUT | ENABLE_PROCESSED_INPUT);
+    THROW_IF_FAILED(
+        SetConsoleMode(_consoleHandle, ENABLE_WINDOW_INPUT | ENABLE_PROCESSED_INPUT),
+        "Couldn't set console mode.");
 }
 
 
@@ -17,41 +20,39 @@ GameWindow::GameWindow()  :
 void GameWindow::Update() {
     //fetch number of input events
     DWORD inputBufferSize = 0;
-    GetNumberOfConsoleInputEvents(_consoleHandle, &inputBufferSize);
+    THROW_IF_FAILED(
+        GetNumberOfConsoleInputEvents(_consoleHandle, &inputBufferSize),
+        "couldn't get number of console events.");
+    
     if (inputBufferSize == 0)
         return; // avoids blocking on empty input buffers
 
     //allocate input buffer
     std::vector<INPUT_RECORD> inputBuffer(inputBufferSize);
     
-    //Read input buffer
+    //fetch console inputs into input buffer
     DWORD inputReadsCount;
-    if (!ReadConsoleInput(
-        _consoleHandle,      // input buffer handle
-        inputBuffer.data(),     // buffer to read into
-        inputBufferSize,         // size of read buffer
-        &inputReadsCount)) // number of records read
-    {
-        //todo : throw
-    }
+    THROW_IF_FAILED(
+        ReadConsoleInput(_consoleHandle, inputBuffer.data(), inputBufferSize, &inputReadsCount)
+        , "couldn't read console input.");
 
+    //foreach input event
     for (int i = 0; i < inputReadsCount; i++)
     {
+        //process key event
         if (inputBuffer[i].EventType == KEY_EVENT) {
             auto key = inputBuffer[inputReadsCount - 1].Event.KeyEvent;
-            //process input
-            //printf("Key event: \"%c\" ", key.uChar.AsciiChar);
-
             if (key.bKeyDown)
-                printf("key pressed\n" + key.uChar.AsciiChar);
-            else printf("key released\n");
+                _heldKeys.insert(key.uChar.AsciiChar);
+            else
+                _heldKeys.erase(key.uChar.AsciiChar);
         }
     }
     
 }
 
-inline bool GameWindow::IsKeyHeld() {
-    return false;
+inline bool GameWindow::IsKeyHeld(char key) {
+    return _heldKeys.contains(key);
 }
 
 #pragma region Display

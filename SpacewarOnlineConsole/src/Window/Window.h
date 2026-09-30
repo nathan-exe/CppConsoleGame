@@ -21,7 +21,7 @@ private:
 	HANDLE _consoleHandle;
 
 	//inputs
-	//std::set<char> _heldKeys{};
+	std::set<char> _heldKeys{};
 
 public:
 	GameWindow();
@@ -29,7 +29,7 @@ public:
 	void Update();
 
 	//inputs
-	inline bool IsKeyHeld();
+	inline bool IsKeyHeld(char key);
 
 	//display
 	void BeginFrame();
