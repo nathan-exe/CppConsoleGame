@@ -142,6 +142,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Window\Inputs\KeyboardInputData.cpp" />
     <ClCompile Include="src\Entities\Entity.cpp" />
     <ClCompile Include="src\Game\Game.cpp" />
     <ClCompile Include="main.cpp" />
@@ -149,6 +150,7 @@
     <ClCompile Include="src\Maths\Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Window\Inputs\KeyboardInputData.h" />
     <ClInclude Include="src\Entities\Entity.h" />
     <ClInclude Include="src\Enums.h" />
     <ClInclude Include="src\Game\Game.h" />

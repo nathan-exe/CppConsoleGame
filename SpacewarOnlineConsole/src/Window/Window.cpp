@@ -42,17 +42,9 @@ void GameWindow::Update() {
         //process key event
         if (inputBuffer[i].EventType == KEY_EVENT) {
             auto key = inputBuffer[inputReadsCount - 1].Event.KeyEvent;
-            if (key.bKeyDown)
-                _heldKeys.insert(key.uChar.AsciiChar);
-            else
-                _heldKeys.erase(key.uChar.AsciiChar);
+            _inputs.SetKeyStatus(key.uChar.AsciiChar, key.bKeyDown);
         }
     }
-    
-}
-
-inline bool GameWindow::IsKeyHeld(char key) {
-    return _heldKeys.contains(key);
 }
 
 #pragma region Display

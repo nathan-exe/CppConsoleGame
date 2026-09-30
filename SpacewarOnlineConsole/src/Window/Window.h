@@ -1,6 +1,7 @@
 #pragma once
 #include <windows.h> 
 #include <set>
+#include "Inputs/KeyboardInputData.h"
 
 
 class GameWindow
@@ -20,16 +21,12 @@ private:
 	//console handle
 	HANDLE _consoleHandle;
 
-	//inputs
-	std::set<char> _heldKeys{};
+	KeyboardInputData _inputs;
 
 public:
 	GameWindow();
 
 	void Update();
-
-	//inputs
-	inline bool IsKeyHeld(char key);
 
 	//display
 	void BeginFrame();
