@@ -3,14 +3,14 @@
 class Vector2
 {
 public : 
-	
-	static Vector2 operator+(Vector2 a, Vector2 b);
-	static Vector2 operator-(Vector2 a, Vector2 b);
-	static Vector2 operator*(Vector2 a, float b);
-	static Vector2 operator/(Vector2 a, float b);
 
-private :
-	float _x;
-	float _y;
+	Vector2(float x, float y);
+	 Vector2 operator+(Vector2 other);
+	 Vector2 operator-(Vector2 other);
+	 Vector2 operator*(float b);
+	 Vector2 operator/(float b);
+	
+	float x; 
+	float y;
 };
 
