@@ -71,7 +71,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\Nathan\source\repos\SpacewarOnlineConsole\SpacewarOnlineConsole;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -142,21 +142,23 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Window\Inputs\KeyboardInputData.cpp" />
+    <ClCompile Include="src\Entities\Ship.cpp" />
     <ClCompile Include="src\Entities\Entity.cpp" />
     <ClCompile Include="src\Game\Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Window\Window.cpp" />
     <ClCompile Include="src\Maths\Vector2.cpp" />
+    <ClCompile Include="src\Maths\WindowsTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Window\Inputs\KeyboardInputData.h" />
+    <ClInclude Include="src\Entities\Ship.h" />
     <ClInclude Include="src\Entities\Entity.h" />
     <ClInclude Include="src\Enums.h" />
     <ClInclude Include="src\Game\Game.h" />
     <ClInclude Include="src\Macros.h" />
     <ClInclude Include="src\Window\Window.h" />
     <ClInclude Include="src\Maths\Vector2.h" />
+    <ClInclude Include="src\Maths\WindowsTimer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

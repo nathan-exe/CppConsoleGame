@@ -3,36 +3,12 @@
 
 #include <iostream>
 #include <windows.h>
-
-constexpr unsigned int SCREEN_WIDTH = 100;
-constexpr unsigned int SCREEN_HEIGHT = 100;
+#include <src/Game/Game.h>
 
 int main()
 {
-    HANDLE hOutput = (HANDLE)GetStdHandle(STD_OUTPUT_HANDLE);
-
-    COORD dwBufferSize = { SCREEN_WIDTH,SCREEN_HEIGHT };
-    COORD dwBufferCoord = { 0, 0 };
-    SMALL_RECT rcRegion = { 0, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT - 1 };
-
-    CHAR_INFO buffer[SCREEN_HEIGHT][SCREEN_WIDTH];
-
-    ReadConsoleOutputW(hOutput, (CHAR_INFO*)buffer, dwBufferSize,
-        dwBufferCoord, &rcRegion);
-
-    buffer[5][10].Char.AsciiChar = 'H';
-    buffer[5][10].Attributes = 0x0E;
-    buffer[5][11].Char.AsciiChar = 'i';
-    buffer[5][11].Attributes = 0x0B;
-    buffer[5][12].Char.AsciiChar = '!';
-    buffer[5][12].Attributes = 0x0A;
-
-    WriteConsoleOutput(hOutput, (CHAR_INFO*)buffer, dwBufferSize,
-        dwBufferCoord, &rcRegion);
-    std::cout << "Hello World!\n";
-    
-    int o;
-    std::cin>>o;
+	Game game{};
+	game.Run();
 }
 
 // Exécuter le programme : Ctrl+F5 ou menu Déboguer > Exécuter sans débogage
