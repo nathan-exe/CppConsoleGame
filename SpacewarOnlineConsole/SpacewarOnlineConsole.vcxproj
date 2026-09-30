@@ -146,6 +146,7 @@
     <ClCompile Include="src\Entities\Entity.cpp" />
     <ClCompile Include="src\Game\Game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\Window\Inputs\KeyboardInputData.cpp" />
     <ClCompile Include="src\Window\Window.cpp" />
     <ClCompile Include="src\Maths\Vector2.cpp" />
     <ClCompile Include="src\Maths\WindowsTimer.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="src\Enums.h" />
     <ClInclude Include="src\Game\Game.h" />
     <ClInclude Include="src\Macros.h" />
+    <ClInclude Include="src\Window\Inputs\KeyboardInputData.h" />
     <ClInclude Include="src\Window\Window.h" />
     <ClInclude Include="src\Maths\Vector2.h" />
     <ClInclude Include="src\Maths\WindowsTimer.h" />
