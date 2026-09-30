@@ -11,7 +11,7 @@ public :
 	
 private :
 
-	inline std::pair<int, int> GetScreenPosition();
+	inline std::pair<int, int> GetScreenPosition() {};
 
 	Vector2 _position;
 	Vector2 _velocity;

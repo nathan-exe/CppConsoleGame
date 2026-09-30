@@ -1,8 +1,14 @@
 #include "Game.h"
 #include <wincontypes.h>
+#include <src/Entities/Ship.h>
+#include <src/Entities/Entity.h>
 
 void Game::Run()
 {
+	Ship shipp{};
+
+	_entities.push_back(&shipp);
+
 	static float deltaTime = 0;
 
 	while (true) {
@@ -13,15 +19,22 @@ void Game::Run()
 		
 		_window.Update();
 		for (auto& rEntity : _entities) {
-			rEntity.Update(deltaTime);
+			rEntity->Update(deltaTime);
 		}
 
 		//=== draw game ===
 
 		_window.BeginFrame();
 		for (auto& rEntity : _entities) {
-			rEntity.Draw(_window);
+			rEntity->Draw(_window);
 		}
+
+		CHAR_INFO charinf{};
+		charinf.Char.AsciiChar = 'A';
+		charinf.Attributes = 0x0E;
+
+		_window.SetChar(5, 5, charinf);
+
 		_window.EndFrame();
 
 		//todo : end deltatime timer and retrieve value

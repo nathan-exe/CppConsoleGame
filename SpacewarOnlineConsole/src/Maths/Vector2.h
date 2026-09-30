@@ -5,6 +5,9 @@ class Vector2
 public : 
 
 	Vector2(float x, float y);
+
+	Vector2() = default;
+
 	 Vector2 operator+(Vector2 other);
 	 Vector2 operator-(Vector2 other);
 	 Vector2 operator*(float b);

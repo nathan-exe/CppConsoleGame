@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <src/Window/Window.h>
-#include <src/Entities/Entity.h>
+#include "src/Entities/Entity.h"
 
 class Game
 {
@@ -10,7 +10,7 @@ public :
 
 private : 
 	GameWindow _window;
-	std::vector<Entity> _entities;
+	std::vector<Entity*> _entities;
 
 };
 
