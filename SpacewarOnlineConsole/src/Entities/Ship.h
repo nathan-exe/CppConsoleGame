@@ -9,6 +9,7 @@ public :
 	void Draw(GameWindow& rWindow) override;
 
 private : 
-	int const _maxVelocity = 10;
+	float const _maxVelocity = 4;
+	float const _acceleration = 4;
 };
 
