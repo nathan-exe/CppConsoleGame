@@ -16,7 +16,7 @@ private:
 	SMALL_RECT _screenRegion;
 
 	//screen buffer
-	CHAR_INFO _buffer[_SCREEN_WIDTH][_SCREEN_HEIGHT];
+	CHAR_INFO _buffer[_SCREEN_HEIGHT][_SCREEN_WIDTH];
 
 	//console handle
 	HANDLE _consoleOutputHandle;
