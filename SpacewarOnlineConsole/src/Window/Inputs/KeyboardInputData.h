@@ -9,6 +9,7 @@ public :
 
 	void SetKeyStatus(char key, bool pressed);
 	inline bool IsKeyHeld(char key) { return _heldKeys.contains(key); };
+
 private : 
 	std::set<char> _heldKeys{};
 

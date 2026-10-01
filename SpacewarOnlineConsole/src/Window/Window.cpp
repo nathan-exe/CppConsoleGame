@@ -11,11 +11,20 @@ GameWindow::GameWindow()  :
 	_consoleOutputHandle = (HANDLE)GetStdHandle(STD_OUTPUT_HANDLE);
 	_consoleInputHandle = (HANDLE)GetStdHandle(STD_INPUT_HANDLE);
 
-    HWND console = GetConsoleWindow();
-    MoveWindow(console, 0, 0, _SCREEN_WIDTH, _SCREEN_HEIGHT, TRUE);
+    //HWND hwnd = GetConsoleWindow();
+    //Sleep(10);//If you execute these code immediately after the program starts, you must wait here for a short period of time, otherwise GetWindow will fail. I speculate that it may be because the console has not been fully initialized.
+    //HWND owner = GetWindow(hwnd, GW_OWNER);
+    //if (owner == NULL) {
+    //    // Windows 10
+    //    SetWindowPos(hwnd, nullptr, 0, 0, 500, 500, SWP_NOZORDER | SWP_NOMOVE);
+    //}
+    //else {
+    //    // Windows 11
+    //    SetWindowPos(owner, nullptr, 0, 0, 500, 500, SWP_NOZORDER | SWP_NOMOVE);
+    //}
 	
 	//enable keyboard inputs
-    THROW_IF_FAILED(
+    WINDOWS_THROW_IF_FAILED(
         SetConsoleMode(_consoleInputHandle, ENABLE_WINDOW_INPUT | ENABLE_PROCESSED_INPUT),
         "Couldn't set console mode.");
 }
@@ -24,7 +33,7 @@ void GameWindow::Update() {
 
     //fetch number of input events
     DWORD inputBufferSize = 0;
-    THROW_IF_FAILED(
+    WINDOWS_THROW_IF_FAILED(
         GetNumberOfConsoleInputEvents(_consoleInputHandle, &inputBufferSize),
         "couldn't get number of console events.");
 
@@ -36,7 +45,7 @@ void GameWindow::Update() {
     
     //fetch console inputs into input buffer
     DWORD inputReadsCount;
-    THROW_IF_FAILED(
+    WINDOWS_THROW_IF_FAILED(
         ReadConsoleInput(_consoleInputHandle, inputBuffer.data(), inputBufferSize, &inputReadsCount)
         , "couldn't read console input.");
 
@@ -54,9 +63,18 @@ void GameWindow::Update() {
 #pragma region Display
 void GameWindow::BeginFrame()
 {
-	ReadConsoleOutput(_consoleOutputHandle, (CHAR_INFO*)_buffer, _SCREEN_SIZE, _SCREEN_COORD, &_screenRegion);
+	//ReadConsoleOutput(_consoleOutputHandle, (CHAR_INFO*)_buffer, _SCREEN_SIZE, _SCREEN_COORD, &_screenRegion);
     
     //todo : clear buffer ???
+    for (int y = 0; y < _SCREEN_HEIGHT; y++) {
+        for (int x = 0; x < _SCREEN_WIDTH; x++) {
+            CHAR_INFO charinf{};
+            charinf.Char.AsciiChar = x==5 ? '#' : '.';
+            charinf.Char.AsciiChar = y==5 ? '|' : charinf.Char.AsciiChar;
+            charinf.Attributes = 0x0E;
+            SetChar(x, y, charinf);
+        }
+    }
 }
 
 void GameWindow::SetChar(int x, int y, CHAR_INFO caracterInfo) {

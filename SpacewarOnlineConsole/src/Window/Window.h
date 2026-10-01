@@ -9,8 +9,8 @@ class GameWindow
 private:
 
 	//screen info
-	static constexpr SHORT _SCREEN_WIDTH = 300;
-	static constexpr SHORT _SCREEN_HEIGHT = 500;
+	static constexpr SHORT _SCREEN_WIDTH = 50;
+	static constexpr SHORT _SCREEN_HEIGHT = 50;
 	static constexpr COORD _SCREEN_SIZE{ _SCREEN_WIDTH,_SCREEN_HEIGHT };
 	static constexpr COORD _SCREEN_COORD{ 0, 0 };
 	SMALL_RECT _screenRegion;
