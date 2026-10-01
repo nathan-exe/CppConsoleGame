@@ -8,8 +8,7 @@ public :
 	KeyboardInputData() = default;
 
 	void SetKeyStatus(char key, bool pressed);
-	inline bool IsKeyHeld(char key) { return _heldKeys.contains(key); };
-
+	inline bool IsKeyHeld(char key) const { return _heldKeys.contains(key); };
 private : 
 	std::set<char> _heldKeys{};
 

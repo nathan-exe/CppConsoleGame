@@ -7,5 +7,9 @@ public :
 
 	void Update(float deltatime, const KeyboardInputData* const inputs) override;
 	void Draw(GameWindow& rWindow) override;
+
+private : 
+	float const _maxVelocity = 4;
+	float const _acceleration = 4;
 };
 

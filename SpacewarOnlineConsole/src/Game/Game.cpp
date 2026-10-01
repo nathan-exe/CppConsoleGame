@@ -3,6 +3,7 @@
 #include <src/Entities/Ship.h>
 #include <src/Entities/Entity.h>
 #include <src/Window/Window.h>
+#include <src/Maths/WindowsTimer.h>
 
 void Game::Run()
 {
@@ -10,17 +11,23 @@ void Game::Run()
 
 	_entities.push_back(&shipp);
 
-	static float deltaTime = 0;
+	//static float deltaTime = 0;
+
+	WindowsTimer timer{};
+	timer.Start();
 
 	while (true) {
 
 		//todo : start deltatime timer
+		float timePassed = timer.GetElapsedSeconds(true);
+		
+
 
 		//=== update game logic ===
 		
 		_window.Update();
 		for (auto& rEntity : _entities) {
-			rEntity->Update(deltaTime,_window.GetInputs());
+			rEntity->Update(timePassed,_window.GetInputs());
 		}
 
 		//=== draw game ===

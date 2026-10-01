@@ -11,10 +11,11 @@ public :
 	
 private :
 
-	inline std::pair<int, int> GetScreenPosition() {};
-
+protected : 
 	Vector2 _position;
 	Vector2 _velocity;
 	Heading _heading;
+
+	inline std::pair<int, int> GetScreenPosition() {};
 };
 
