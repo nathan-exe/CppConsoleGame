@@ -11,17 +11,7 @@ GameWindow::GameWindow()  :
 	_consoleOutputHandle = (HANDLE)GetStdHandle(STD_OUTPUT_HANDLE);
 	_consoleInputHandle = (HANDLE)GetStdHandle(STD_INPUT_HANDLE);
 
-    //HWND hwnd = GetConsoleWindow();
-    //Sleep(10);//If you execute these code immediately after the program starts, you must wait here for a short period of time, otherwise GetWindow will fail. I speculate that it may be because the console has not been fully initialized.
-    //HWND owner = GetWindow(hwnd, GW_OWNER);
-    //if (owner == NULL) {
-    //    // Windows 10
-    //    SetWindowPos(hwnd, nullptr, 0, 0, 500, 500, SWP_NOZORDER | SWP_NOMOVE);
-    //}
-    //else {
-    //    // Windows 11
-    //    SetWindowPos(owner, nullptr, 0, 0, 500, 500, SWP_NOZORDER | SWP_NOMOVE);
-    //}
+    
 	
 	//enable keyboard inputs
     WINDOWS_THROW_IF_FAILED(
@@ -78,7 +68,7 @@ void GameWindow::BeginFrame()
 }
 
 void GameWindow::SetChar(int x, int y, CHAR_INFO caracterInfo) {
-	_buffer[x][y] = caracterInfo;
+	_buffer[y][x] = caracterInfo;
 }
 
 void GameWindow::EndFrame() {
