@@ -73,22 +73,7 @@ void GameWindow::Update() {
 void GameWindow::BeginFrame()
 {    
     //clear buffer
-    //for (int y = 0; y < _bufferSize.Y; y++) {
-    //    for (int x = 0; x < _bufferSize.X; x++) {
-    //        CHAR_INFO charinf{};
-    //        //charinf.Char.AsciiChar = x==5 ? '#' : '.';
-    //        //charinf.Char.AsciiChar = y==5 ? '|' : charinf.Char.AsciiChar;
-    //        charinf.Char.AsciiChar = ' ' ;
-    //        charinf.Attributes = 0x0E;
-    //        SetChar(x, y, charinf);
-    //    }
-    //}
-
-    for (int i = 0; i < _bufferSize.Y * _bufferSize.X; i++) {
-        (_buffer + i)->Char.AsciiChar = ' ';
-        (_buffer + i)->Attributes = 0;
-    }
-        
+    memset(_buffer, 0, _bufferSize.Y * _bufferSize.X * sizeof(CHAR_INFO));
 }
 
 void GameWindow::SetChar(int x, int y, CHAR_INFO caracterInfo) {

@@ -1,6 +1,7 @@
 #include "Ship.h"
 #include "Missile.h"
 #include <vector>
+#include <cmath>
 
 Ship::Ship()
 	: Entity()
@@ -38,7 +39,7 @@ void Ship::Update(float deltatime, const KeyboardInputData* const inputs)
 		bool positive = (YgreaterThanX ? inputVector.y : inputVector.x) > 0;
 		char bitmask = (char)YgreaterThanX | ((char)positive) << 1;
 		const char sprites[] = "<^>v";
-		_sprite.Attributes = FOREGROUND_INTENSITY | FOREGROUND_GREEN;
+		_sprite.Attributes = FOREGROUND_INTENSITY | FOREGROUND_GREEN | BACKGROUND_GREEN;
 		_sprite.Char.AsciiChar = sprites[bitmask];
 	}
 	
@@ -48,7 +49,7 @@ void Ship::Update(float deltatime, const KeyboardInputData* const inputs)
 void Ship::Draw(GameWindow& rWindow)
 {
 	//write char to buffer
-	rWindow.SetChar(_position.x, _position.y, _sprite);
+	rWindow.SetChar(static_cast<int>(std::round(_position.x)), static_cast<int>(std::round(_position.y)), _sprite);
 }
 
 std::vector<Missile> Ship::GetMissiles()
