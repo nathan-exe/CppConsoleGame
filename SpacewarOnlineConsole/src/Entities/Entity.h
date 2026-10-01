@@ -6,16 +6,25 @@
 class Entity
 {
 public :
+	Entity();
+
 	virtual void Update(float deltatime,const KeyboardInputData* const inputs) = 0;
 	virtual void Draw(GameWindow& rWindow) = 0;
 	
-private :
+	Entity& SetPosition(Vector2 position);
+	Entity& SetVelocity(Vector2 velocity);
 
+
+	bool IsActive();
+private :
+	bool _active;
+	
 protected : 
 	Vector2 _position;
 	Vector2 _velocity;
 	Heading _heading;
 
+	void Activate(bool activate);
 	inline std::pair<int, int> GetScreenPosition() {};
 };
 

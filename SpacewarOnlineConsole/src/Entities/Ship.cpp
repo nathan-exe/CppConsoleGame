@@ -1,4 +1,13 @@
 #include "Ship.h"
+#include "Missile.h"
+#include <vector>
+
+Ship::Ship()
+	: Entity()
+{
+	Activate(true);
+	_missiles.resize(10);
+}
 
 void Ship::Update(float deltatime, const KeyboardInputData* const inputs)
 {
@@ -18,10 +27,10 @@ void Ship::Update(float deltatime, const KeyboardInputData* const inputs)
 
 	_position = _position + _velocity * deltatime;
 
-	////Missiles
-	//if (inputs->IsKeyHeld('e')) {
-	//	Missile missile{_velocity};
-	//}
+	//Missiles
+	if (inputs->IsKeyHeld('e')) {
+		_missiles[0].Launch(_velocity,_position);
+	}
 
 	//update sprite
 	if (inputVector.x != 0 || inputVector.y != 0) {
@@ -42,3 +51,7 @@ void Ship::Draw(GameWindow& rWindow)
 	rWindow.SetChar(_position.x, _position.y, _sprite);
 }
 
+std::vector<Missile> Ship::GetMissiles()
+{
+	return _missiles;
+}
