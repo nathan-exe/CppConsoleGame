@@ -27,6 +27,7 @@ private:
 
 public:
 	GameWindow();
+	~GameWindow();
 
 	void Update();
 

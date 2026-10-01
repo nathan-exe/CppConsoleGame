@@ -1,8 +1,11 @@
 #include "Ship.h"
-#include "Missile.h"
 
 void Ship::Update(float deltatime, const KeyboardInputData* const inputs)
 {
+	
+
+	//update movements
+
 	Vector2 inputVector;
 
 	inputVector.x = inputs->IsKeyHeld('d') ? 1 : (inputs->IsKeyHeld('q') ? -1 : 0);
@@ -20,12 +23,22 @@ void Ship::Update(float deltatime, const KeyboardInputData* const inputs)
 	//	Missile missile{_velocity};
 	//}
 
+	//update sprite
+	if (inputVector.x != 0 || inputVector.y != 0) {
+		bool YgreaterThanX = abs(inputVector.y) > abs(inputVector.x);
+		bool positive = (YgreaterThanX ? inputVector.y : inputVector.x) > 0;
+		char bitmask = (char)YgreaterThanX | ((char)positive) << 1;
+		const char sprites[] = "<^>v";
+		_sprite.Attributes = FOREGROUND_INTENSITY | FOREGROUND_GREEN;
+		_sprite.Char.AsciiChar = sprites[bitmask];
+	}
+	
+
 }
 
 void Ship::Draw(GameWindow& rWindow)
 {
-	CHAR_INFO charinf{};
-	charinf.Char.AsciiChar = 'A';
-	charinf.Attributes = 0x0E;
-	rWindow.SetChar(_position.x, _position.y, charinf);
+	//write char to buffer
+	rWindow.SetChar(_position.x, _position.y, _sprite);
 }
+

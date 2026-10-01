@@ -27,16 +27,15 @@ GameWindow::GameWindow()
     _bufferWriteRegion = {0,0,_bufferSize.X,_bufferSize.Y };
     _buffer = new CHAR_INFO[_bufferSize.X * _bufferSize.Y];
 
-    //resize window
-    /*WINDOWS_THROW_IF_FAILED(
-        MoveWindow(_consoleWindowHandle, 200,200, _SCREEN_WIDTH*7, _SCREEN_HEIGHT*10, TRUE),
-        "couldn't move window.");*/
-	
-
 	//enable keyboard inputs
     WINDOWS_THROW_IF_FAILED(
         SetConsoleMode(_consoleInputHandle, ENABLE_WINDOW_INPUT | ENABLE_PROCESSED_INPUT),
         "Couldn't set console mode.");
+}
+
+GameWindow::~GameWindow()
+{
+    delete[] _buffer;
 }
 
 void GameWindow::Update() {
@@ -72,19 +71,24 @@ void GameWindow::Update() {
 
 #pragma region Display
 void GameWindow::BeginFrame()
-{
-	//ReadConsoleOutput(_consoleOutputHandle, (CHAR_INFO*)_buffer, _SCREEN_SIZE, _SCREEN_COORD, &_screenRegion);
-    
-    //todo : clear buffer
-    for (int y = 0; y < _bufferSize.Y; y++) {
-        for (int x = 0; x < _bufferSize.X; x++) {
-            CHAR_INFO charinf{};
-            charinf.Char.AsciiChar = x==5 ? '#' : '.';
-            charinf.Char.AsciiChar = y==5 ? '|' : charinf.Char.AsciiChar;
-            charinf.Attributes = 0x0E;
-            SetChar(x, y, charinf);
-        }
+{    
+    //clear buffer
+    //for (int y = 0; y < _bufferSize.Y; y++) {
+    //    for (int x = 0; x < _bufferSize.X; x++) {
+    //        CHAR_INFO charinf{};
+    //        //charinf.Char.AsciiChar = x==5 ? '#' : '.';
+    //        //charinf.Char.AsciiChar = y==5 ? '|' : charinf.Char.AsciiChar;
+    //        charinf.Char.AsciiChar = ' ' ;
+    //        charinf.Attributes = 0x0E;
+    //        SetChar(x, y, charinf);
+    //    }
+    //}
+
+    for (int i = 0; i < _bufferSize.Y * _bufferSize.X; i++) {
+        (_buffer + i)->Char.AsciiChar = ' ';
+        (_buffer + i)->Attributes = 0;
     }
+        
 }
 
 void GameWindow::SetChar(int x, int y, CHAR_INFO caracterInfo) {
