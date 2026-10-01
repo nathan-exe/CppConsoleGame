@@ -1,6 +1,6 @@
 #include "Ship.h"
 
-void Ship::Update(float deltatime)
+void Ship::Update(float deltatime, KeyboardInputData& const inputs)
 {
 
 }

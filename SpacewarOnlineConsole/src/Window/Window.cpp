@@ -10,6 +10,9 @@ GameWindow::GameWindow()  :
 	//retrieve handles to the console
 	_consoleOutputHandle = (HANDLE)GetStdHandle(STD_OUTPUT_HANDLE);
 	_consoleInputHandle = (HANDLE)GetStdHandle(STD_INPUT_HANDLE);
+
+    HWND console = GetConsoleWindow();
+    MoveWindow(console, 0, 0, _SCREEN_WIDTH, _SCREEN_HEIGHT, TRUE);
 	
 	//enable keyboard inputs
     THROW_IF_FAILED(
@@ -52,6 +55,7 @@ void GameWindow::Update() {
 void GameWindow::BeginFrame()
 {
 	ReadConsoleOutput(_consoleOutputHandle, (CHAR_INFO*)_buffer, _SCREEN_SIZE, _SCREEN_COORD, &_screenRegion);
+    
     //todo : clear buffer ???
 }
 

@@ -2,6 +2,7 @@
 #include <wincontypes.h>
 #include <src/Entities/Ship.h>
 #include <src/Entities/Entity.h>
+#include <src/Window/Window.h>
 
 void Game::Run()
 {
@@ -19,7 +20,7 @@ void Game::Run()
 		
 		_window.Update();
 		for (auto& rEntity : _entities) {
-			rEntity->Update(deltaTime);
+			rEntity->Update(deltaTime,_window.GetInputs());
 		}
 
 		//=== draw game ===
@@ -29,11 +30,11 @@ void Game::Run()
 			rEntity->Draw(_window);
 		}
 
-		CHAR_INFO charinf{};
-		charinf.Char.AsciiChar = 'A';
-		charinf.Attributes = 0x0E;
+		//CHAR_INFO charinf{};
+		//charinf.Char.AsciiChar = 'A';
+		//charinf.Attributes = 0x0E;
 
-		_window.SetChar(5, 5, charinf);
+		//_window.SetChar(5, 5, charinf);
 
 		_window.EndFrame();
 
