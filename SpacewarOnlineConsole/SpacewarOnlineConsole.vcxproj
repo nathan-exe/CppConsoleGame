@@ -142,6 +142,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Entities\Missile.cpp" />
     <ClCompile Include="src\Entities\Ship.cpp" />
     <ClCompile Include="src\Entities\Entity.cpp" />
     <ClCompile Include="src\Game\Game.cpp" />
@@ -152,6 +153,7 @@
     <ClCompile Include="src\Maths\WindowsTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Entities\Missile.h" />
     <ClInclude Include="src\Entities\Ship.h" />
     <ClInclude Include="src\Entities\Entity.h" />
     <ClInclude Include="src\Enums.h" />

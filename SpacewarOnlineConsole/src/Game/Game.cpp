@@ -5,46 +5,53 @@
 #include <src/Window/Window.h>
 #include <src/Maths/WindowsTimer.h>
 
+Game* Game::instance = nullptr;
+
+Game::Game() {
+	instance = this;
+}
+
 void Game::Run()
 {
 	Ship shipp{};
-
-	_entities.push_back(&shipp);
-
-	//static float deltaTime = 0;
 
 	WindowsTimer timer{};
 	timer.Start();
 
 	while (true) {
-
-		//todo : start deltatime timer
 		float timePassed = timer.GetElapsedSeconds(true);
 		
-
-
 		//=== update game logic ===
 		
 		_window.Update();
+
 		for (auto& rEntity : _entities) {
-			rEntity->Update(timePassed,_window.GetInputs());
+			if(rEntity->IsActive()) rEntity->Update(timePassed, _window.GetInputs());
 		}
 
 		//=== draw game ===
 
 		_window.BeginFrame();
+
 		for (auto& rEntity : _entities) {
-			rEntity->Draw(_window);
+			if (rEntity->IsActive()) rEntity->Draw(_window);
 		}
-
-		//CHAR_INFO charinf{};
-		//charinf.Char.AsciiChar = 'A';
-		//charinf.Attributes = 0x0E;
-
-		//_window.SetChar(5, 5, charinf);
 
 		_window.EndFrame();
 
 		//todo : end deltatime timer and retrieve value
+	}
+}
+
+void Game::RegisterEntity(Entity* entity) {
+	_entities.push_back(entity);
+}
+
+void Game::UnregisterEntity(Entity* entity) {
+	for (auto i = _entities.begin(); i != _entities.end();) {
+		if (*i == entity)
+			i = _entities.erase(i);
+		else
+			i++;
 	}
 }
