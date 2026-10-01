@@ -3,24 +3,25 @@
 #include <set>
 #include "Inputs/KeyboardInputData.h"
 
+//120,30 avec maximize avant
+//156,41 avec maximize apres
+
 
 class GameWindow
 {
 private:
 
 	//screen info
-	static constexpr SHORT _SCREEN_WIDTH = 50;
-	static constexpr SHORT _SCREEN_HEIGHT = 50;
-	static constexpr COORD _SCREEN_SIZE{ _SCREEN_WIDTH,_SCREEN_HEIGHT };
-	static constexpr COORD _SCREEN_COORD{ 0, 0 };
-	SMALL_RECT _screenRegion;
+	COORD _bufferSize;
+	SMALL_RECT _bufferWriteRegion;
 
 	//screen buffer
-	CHAR_INFO _buffer[_SCREEN_HEIGHT][_SCREEN_WIDTH];
+	CHAR_INFO* _buffer;
 
 	//console handle
 	HANDLE _consoleOutputHandle;
 	HANDLE _consoleInputHandle;
+	HWND _consoleWindowHandle;
 
 	KeyboardInputData _inputs;
 
