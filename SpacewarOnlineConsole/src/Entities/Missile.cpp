@@ -5,8 +5,6 @@ Missile::Missile(const Ship* owner, WORD color) : Entity(),
 {
 }
 
-
-
 void Missile::Launch(Vector2 velocity, Vector2 spawnPosition)
 {
 	this

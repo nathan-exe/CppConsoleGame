@@ -15,22 +15,29 @@ Game::Game() {
 
 void Game::Run()
 {
+	// === Game Initialisation ===
+
+	//load sprites
 	Sprite _backgroundSprite{ "background.txt", FOREGROUND_BLUE };
 
-	Ship shipp(FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN);
+	//instantiate battle ships
+	Ship player1(FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN,ControlScheme('z','q','s','d','c'),Vector2(10, _window.GetBufferSize().Y/2));
+	Ship player2(FOREGROUND_INTENSITY | FOREGROUND_RED ,ControlScheme('o','k','l','m','n'),Vector2(_window.GetBufferSize().X - 10, _window.GetBufferSize().Y / 2));
 
-	WindowsTimer timer{};
-	timer.Start();
+	//start timer
+	WindowsTimer frameTimer{};
+	frameTimer.Start();
 
+	// === Main Game Loop ===
 	while (true) 
 	{
-		float deltaTime = timer.GetElapsedSeconds(true);
+		float deltaTime = frameTimer.GetElapsedSeconds(true);
 		
 		//=== update game logic ===
 		
 		_window.Update();
 
-		//collision detection
+		//check for colliding entities
 		std::map<Entity*,std::vector<Entity*>> collidingEntities;
 		for (int i = 0; i < _entities.size(); i++)
 		{
@@ -53,9 +60,8 @@ void Game::Run()
 			}
 		}
 
-		int i = 0;
+		//update entities
 		for (auto pEntity : _entities) {
-			i++;
 			if(pEntity->IsActive())
 				pEntity->Update({deltaTime,_window});
 		}
@@ -63,9 +69,7 @@ void Game::Run()
 		//=== draw game ===
 
 		_window.Clear();
-
 		_window.Blit(_backgroundSprite.GetData());
-
 		for (auto& rEntity : _entities) {
 			if (rEntity->IsActive())
 				rEntity->Draw(_window);

@@ -1,5 +1,5 @@
 #pragma once
-#include <set>
+#include <unordered_set>
 
 class KeyboardInputData
 {
@@ -8,9 +8,9 @@ public :
 	KeyboardInputData() = default;
 
 	void SetKeyStatus(char key, bool pressed);
-	inline bool IsKeyHeld(char key) const { return _heldKeys.contains(key); };
+	inline bool IsKeyHeld(const char key) const { return _heldKeys.contains(key); };
 private : 
-	std::set<char> _heldKeys{};
+	std::unordered_set<char> _heldKeys{};
 
 };
 

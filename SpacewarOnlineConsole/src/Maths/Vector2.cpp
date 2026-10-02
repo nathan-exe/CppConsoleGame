@@ -89,7 +89,7 @@ float Vector2::GetDistanceBetweenSegments(std::pair<Vector2, Vector2> seg0, std:
 		GetDistanceToSegment(B1, A0, B0)
 	};
 
-	return *std::min_element(
+		return *std::min_element(
 		std::begin(distances),
 		std::end(distances));
 	

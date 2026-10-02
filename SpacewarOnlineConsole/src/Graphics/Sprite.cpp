@@ -61,7 +61,7 @@ void Sprite::Draw(GameWindow& rWindow, int positionX, int positionY)
 	for (int y = 0; y <  _height; y++) {
 		for (int x = 0; x < _width; x++) 
 		{
-			if (rWindow.ContainsPoint(cornerX + x, cornerY + y)) {
+			if (rWindow.ContainsPoint(cornerX + x, cornerY + y) && _charData[x + y * _width].Char.AsciiChar !=' ') {
 				rWindow.SetChar(cornerX + x, cornerY + y, _charData[x + y * _width]);
 			}
 		}

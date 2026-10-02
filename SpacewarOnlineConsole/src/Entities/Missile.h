@@ -10,7 +10,6 @@ public:
 
 	void Update(UpdateContext ctx) override;
 	void Draw(GameWindow& rWindow) override;
-
 private:
 	Sprite _sprite;
 	const Ship* _pOwner;

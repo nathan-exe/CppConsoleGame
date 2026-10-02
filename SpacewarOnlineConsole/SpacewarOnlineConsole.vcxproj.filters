@@ -83,5 +83,8 @@
     <ClInclude Include="src\Graphics\Sprite.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="src\Game\ControlScheme\ControlScheme.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -154,6 +154,7 @@
     <ClCompile Include="src\Maths\WindowsTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Game\ControlScheme\ControlScheme.h" />
     <ClInclude Include="src\Graphics\Sprite.h" />
     <ClInclude Include="src\Entities\Missile.h" />
     <ClInclude Include="src\Entities\Ship.h" />
