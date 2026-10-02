@@ -11,7 +11,7 @@ Sprite::Sprite(std::string filename, WORD attributes)
 	//std::ofstream file(cwd.string());
 	//file.close();
 
-	const char emptyEquivalentChar = ':';
+	const char SPACE = ':';
 	const char* pathToSprites = "resources/";
 
 	std::ifstream input;
@@ -21,34 +21,37 @@ Sprite::Sprite(std::string filename, WORD attributes)
 	input >> _width;
 	input >> _height;
 
-	std::string value;
+	size_t dataLength = _width * _height;
+	_charData = new CHAR_INFO[dataLength];
 
-	while (!(input >> value).fail()) {
-		for (char a : value)
+	std::string tmp;
+	size_t i = 0;
+	while (!(input >> tmp).fail()) {
+		for (char c : tmp)
 		{
 			CHAR_INFO charinfo{};
 
-			if (a == emptyEquivalentChar) 
+			if (c == SPACE) 
 			{
-				a = ' ';
+				c = ' ';
 			}
 			else {
 				charinfo.Attributes = attributes;
 			}
 			
-			charinfo.Char.AsciiChar = a;
+			charinfo.Char.AsciiChar = c;
 			
-			_charData.push_back(charinfo);
+			if(i< dataLength)
+				*(_charData + i++) = charinfo;
 		}
 	}
 	input.close();
 }
 
-Sprite::Sprite(int sizeX, int sizeY, std::vector<CHAR_INFO> display)
+Sprite::~Sprite()
 {
-	_width = sizeX;
-	_height = sizeY;
-	_charData = display;
+	if(_charData != nullptr)
+		delete[] _charData;
 }
 
 void Sprite::Draw(GameWindow& rWindow, int positionX, int positionY)

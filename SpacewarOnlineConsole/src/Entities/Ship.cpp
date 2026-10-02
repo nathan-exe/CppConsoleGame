@@ -5,7 +5,9 @@
 #include <string>
 
 Ship::Ship(WORD color, ControlScheme controlScheme, Vector2 startPosition)
-	: Entity(), _sprite("PlayerShip.txt", color), _controlScheme(controlScheme)
+	: Entity("PlayerShip.txt", color),
+	_controlScheme(controlScheme),
+	_sharedMissileSprite("Missile.txt",color & (~FOREGROUND_INTENSITY))
 {
 	SetPosition(startPosition);
 	SetActive(true);
@@ -13,7 +15,8 @@ Ship::Ship(WORD color, ControlScheme controlScheme, Vector2 startPosition)
 	//allocate a pool of missiles.
 	_missilePool.reserve(20);
 	for(int i = 0; i< 20; i++)
-		_missilePool.emplace_back(this, color);
+		_missilePool.emplace_back(this,&_sharedMissileSprite);
+
 }
 
 void Ship::Update(UpdateContext ctx)
@@ -48,7 +51,7 @@ void Ship::Update(UpdateContext ctx)
 
 void Ship::Draw(GameWindow& rWindow)
 {
-	_sprite.Draw(rWindow, _position.x, _position.y);
+	_pSprite->Draw(rWindow, _position.x, _position.y);
 }
 
 std::vector<Missile> Ship::GetMissiles()

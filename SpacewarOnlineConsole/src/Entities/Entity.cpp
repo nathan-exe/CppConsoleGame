@@ -1,11 +1,25 @@
 #include "Entity.h"
 #include <src/Game/Game.h>
 
-Entity::Entity()
+Entity::Entity(const char* spritePath, WORD color)
+	: _pSprite(new Sprite(spritePath,color)), _ownsSprite(true)
 {
 	Game::GetInstance().RegisterEntity(this);
-	_active = false;
 }
+
+Entity::Entity(Sprite* pSprite)
+	: _pSprite(pSprite), _ownsSprite(false)
+{
+	Game::GetInstance().RegisterEntity(this);
+}
+
+Entity::~Entity()
+{
+	if (_ownsSprite)
+		delete _pSprite;
+}
+
+
 
 Entity& Entity::SetPosition(Vector2 position)
 {

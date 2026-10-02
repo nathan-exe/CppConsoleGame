@@ -14,7 +14,9 @@ public :
 	};
 
 public :
-	Entity();
+	Entity(const char* spritePath,WORD color);
+	Entity(Sprite* pSprite);
+	~Entity();
 
 	virtual void Update(UpdateContext ctx) = 0;
 	virtual void Draw(GameWindow& rWindow) = 0;
@@ -30,7 +32,7 @@ public :
 	inline float GetCollisionRadius() const { return _collisionRadius; }
 
 protected : 
-	Sprite _sprite; //todo : change to be a sprite reference to avoid having 50 identical sprites defined
+	Sprite* _pSprite; //todo : change to be a sprite reference to avoid having 50 identical sprites defined
 	Vector2 _position;
 	Vector2 _oldPosition;//the position of the object on the previous frame
 	Vector2 _velocity;
@@ -38,7 +40,9 @@ protected :
 	float _collisionRadius;
 
 private:
-	bool _active;
+	bool _active = false;
+	bool _ownsSprite;
+
 
 };
 

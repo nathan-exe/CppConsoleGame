@@ -24,7 +24,7 @@ void Game::Run()
 	Ship player1(FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN,ControlScheme('z','q','s','d','c'),Vector2(10, _window.GetBufferSize().Y/2));
 	Ship player2(FOREGROUND_INTENSITY | FOREGROUND_RED ,ControlScheme('o','k','l','m','n'),Vector2(_window.GetBufferSize().X - 10, _window.GetBufferSize().Y / 2));
 
-	//start timer
+	//start frame timer
 	WindowsTimer frameTimer{};
 	frameTimer.Start();
 

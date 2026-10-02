@@ -1,9 +1,11 @@
 #include "Missile.h"
 
-Missile::Missile(const Ship* owner, WORD color) : Entity(),
-	_sprite("Missile.txt",color), _pOwner(owner)
+Missile::Missile(const Ship* owner, Sprite* pSprite)
+	: Entity(pSprite),
+	_pOwner(owner)
 {
 }
+
 
 void Missile::Launch(Vector2 velocity, Vector2 spawnPosition)
 {
@@ -28,5 +30,5 @@ void Missile::Draw(GameWindow& rWindow)
 		return;
 	}
 
-	_sprite.Draw(rWindow, _position.x, _position.y);
+	_pSprite->Draw(rWindow, _position.x, _position.y);
 }

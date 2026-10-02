@@ -15,14 +15,15 @@ public :
 	std::vector<Missile> GetMissiles();
 private : 
 
-	float const _maxVelocity = 20;
+	float const _maxVelocity = 30;
 	float const _acceleration = 80;
 	
 	int _nextMissileIdInPool = 0;
 	bool _wasHoldingShootKeyLastFrame = false;
 	
-	Sprite _sprite;
 	const ControlScheme _controlScheme;
+
+	Sprite _sharedMissileSprite;
 	std::vector<Missile> _missilePool;
 
 	
