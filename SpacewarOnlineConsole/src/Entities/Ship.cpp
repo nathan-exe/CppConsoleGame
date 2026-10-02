@@ -10,21 +10,8 @@ Ship::Ship()
 	SetActive(true);
 	_missiles.resize(10);
 
-	_sprite = Sprite{"truc.txt", FOREGROUND_INTENSITY | FOREGROUND_GREEN | BACKGROUND_GREEN };
-
-	//std::string sprite{ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" };
-
-	//std::vector<CHAR_INFO> vector{};
-
-	//for (char a : sprite) 
-	//{
-	//	CHAR_INFO charinfo{};
-	//	charinfo.Char.AsciiChar = a;
-	//	charinfo.Attributes = FOREGROUND_INTENSITY | FOREGROUND_GREEN | BACKGROUND_GREEN;
-	//	vector.push_back(charinfo);
-	//}
-
-	//_sprite = Sprite{ 9, 9, vector};
+	//_sprite = Sprite{"truc.txt", FOREGROUND_INTENSITY | FOREGROUND_RED };
+	_sprite = Sprite{"PlayerShip.txt", FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN };
 }
 
 void Ship::Update(UpdateContext ctx)

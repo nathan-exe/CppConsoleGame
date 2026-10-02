@@ -15,7 +15,7 @@ public :
 private : 
 	Sprite _sprite;
 	float const _maxVelocity = 20;
-	float const _acceleration = 40;
+	float const _acceleration = 80;
 
 	std::vector<Missile> _missiles;
 	//todo : const char _inputScheme[5];//up left down right shoot

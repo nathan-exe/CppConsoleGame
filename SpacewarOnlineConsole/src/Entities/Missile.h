@@ -12,6 +12,7 @@ public:
 	void Draw(GameWindow& rWindow) override;
 
 private:
+	Sprite _sprite;
 	Ship* _pOwner;
-	float const _maxVelocity = 50;
+	const float _maxVelocity = 50;
 };

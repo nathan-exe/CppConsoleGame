@@ -1,6 +1,9 @@
 #include "Missile.h"
 
-Missile::Missile() : Entity(){}
+Missile::Missile() : Entity() {
+	_sprite = Sprite("Missile.txt", FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_RED);
+	//_sprite = Sprite{ "PlayerShip.txt", FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN };
+}
 
 
 
@@ -33,4 +36,9 @@ void Missile::Draw(GameWindow& rWindow)
 	charinf.Char.AsciiChar = 'M';
 	charinf.Attributes = 0x0E;
 	rWindow.SetChar(_position.x, _position.y, charinf);
+	_sprite.Draw(rWindow, _position.x, _position.y);
+	/*CHAR_INFO charinf{};
+	charinf.Char.AsciiChar = 'M';
+	charinf.Attributes = 0x0E;
+	rWindow.SetChar(_position.x, _position.y, charinf);*/
 }
