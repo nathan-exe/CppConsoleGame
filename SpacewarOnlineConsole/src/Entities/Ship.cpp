@@ -2,12 +2,27 @@
 #include "Missile.h"
 #include <vector>
 #include <cmath>
+#include <string>
 
 Ship::Ship()
 	: Entity()
 {
 	SetActive(true);
 	_missiles.resize(10);
+
+	std::string sprite{ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" };
+
+	std::vector<CHAR_INFO> vector{};
+
+	for (char a : sprite) 
+	{
+		CHAR_INFO charinfo{};
+		charinfo.Char.AsciiChar = a;
+		charinfo.Attributes = FOREGROUND_INTENSITY | FOREGROUND_GREEN | BACKGROUND_GREEN;
+		vector.push_back(charinfo);
+	}
+
+	_sprite = Sprite{ 9, 9, vector};
 }
 
 void Ship::Update(float deltatime, const KeyboardInputData* const inputs)
@@ -32,17 +47,14 @@ void Ship::Update(float deltatime, const KeyboardInputData* const inputs)
 	}
 
 	//update sprite
-	if (inputVector.x != 0 || inputVector.y != 0) {
-		bool YgreaterThanX = abs(inputVector.y) > abs(inputVector.x);
-		bool positive = (YgreaterThanX ? inputVector.y : inputVector.x) > 0;
-		char bitmask = (char)YgreaterThanX | ((char)positive) << 1;
-		const char sprites[] = "<^>v";
-		_sprite.Attributes = FOREGROUND_INTENSITY | FOREGROUND_GREEN | BACKGROUND_GREEN;
-		_sprite.Char.AsciiChar = sprites[bitmask];
-	}
-
-	//check for collisions
-
+	//if (inputVector.x != 0 || inputVector.y != 0) {
+	//	bool YgreaterThanX = abs(inputVector.y) > abs(inputVector.x);
+	//	bool positive = (YgreaterThanX ? inputVector.y : inputVector.x) > 0;
+	//	char bitmask = (char)YgreaterThanX | ((char)positive) << 1;
+	//	const char sprites[] = "<^>v";
+	//	_sprite.Attributes = FOREGROUND_INTENSITY | FOREGROUND_GREEN | BACKGROUND_GREEN;
+	//	_sprite.Char.AsciiChar = sprites[bitmask];
+	//}
 	
 
 }
@@ -50,7 +62,8 @@ void Ship::Update(float deltatime, const KeyboardInputData* const inputs)
 void Ship::Draw(GameWindow& rWindow)
 {
 	//write char to buffer
-	rWindow.SetChar(static_cast<int>(std::round(_position.x)), static_cast<int>(std::round(_position.y)), _sprite);
+	_sprite.Draw(rWindow, _position.x, _position.y);
+	//rWindow.SetChar(static_cast<int>(std::round(_position.x)), static_cast<int>(std::round(_position.y)), _sprite);
 }
 
 std::vector<Missile> Ship::GetMissiles()

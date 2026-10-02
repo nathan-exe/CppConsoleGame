@@ -1,6 +1,7 @@
 #pragma once
 #include <src/Entities/Entity.h>
 #include <src/Entities/Missile.h>
+#include <src/Graphics/Sprite.h>
 #include <vector>
 
 class Ship : public Entity
@@ -12,7 +13,7 @@ public :
 
 	std::vector<Missile> GetMissiles();
 private : 
-	CHAR_INFO _sprite;
+	Sprite _sprite;
 	float const _maxVelocity = 10;
 	float const _acceleration = 20;
 
