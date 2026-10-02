@@ -4,14 +4,14 @@
 #include <cmath>
 #include <string>
 
-Ship::Ship()
-	: Entity()
+Ship::Ship(WORD color)
+	: Entity(), _sprite("PlayerShip.txt", color)
 {
 	SetActive(true);
-	_missiles.resize(10);
-
+	_missiles.reserve(20);
+	for(int i = 0; i< 20; i++)
+		_missiles.emplace_back(this, color);
 	//_sprite = Sprite{"truc.txt", FOREGROUND_INTENSITY | FOREGROUND_RED };
-	_sprite = Sprite{"PlayerShip.txt", FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN };
 }
 
 void Ship::Update(UpdateContext ctx)

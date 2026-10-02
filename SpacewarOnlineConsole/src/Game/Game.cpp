@@ -17,7 +17,7 @@ void Game::Run()
 {
 	Sprite _backgroundSprite{ "background.txt", FOREGROUND_BLUE };
 
-	Ship shipp{};
+	Ship shipp(FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN);
 
 	WindowsTimer timer{};
 	timer.Start();
@@ -62,7 +62,7 @@ void Game::Run()
 
 		//=== draw game ===
 
-		_window.BeginFrame();
+		_window.Clear();
 
 		_window.Blit(_backgroundSprite.GetData());
 

@@ -7,7 +7,7 @@
 class Ship : public Entity
 {
 public : 
-	Ship();
+	Ship(WORD color);
 	void Update(UpdateContext ctx) override;
 	void Draw(GameWindow& rWindow) override;
 

@@ -1,8 +1,8 @@
 #include "Missile.h"
 
-Missile::Missile() : Entity() {
-	_sprite = Sprite("Missile.txt", FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_RED);
-	//_sprite = Sprite{ "PlayerShip.txt", FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN };
+Missile::Missile(const Ship* owner, WORD color) : Entity(),
+	_sprite("Missile.txt",color), _pOwner(owner)
+{
 }
 
 
@@ -17,8 +17,7 @@ void Missile::Launch(Vector2 velocity, Vector2 spawnPosition)
 
 void Missile::Update(UpdateContext ctx)
 {
-	if (_position.x < 0 || _position.x >= ctx.rWindow.GetBufferSize().X
-		|| _position.y < 0 || _position.y >= ctx.rWindow.GetBufferSize().Y)
+	if (!ctx.rWindow.ContainsPoint(static_cast<int>(_position.x), static_cast<int>(_position.y)))
 		SetActive(false);
 
 	_position = _position + _velocity * ctx.deltatime;
@@ -27,18 +26,9 @@ void Missile::Update(UpdateContext ctx)
 
 void Missile::Draw(GameWindow& rWindow)
 {
-	if (_position.x < 0 || _position.x >= rWindow.GetBufferSize().X
-		|| _position.y < 0 || _position.y >= rWindow.GetBufferSize().Y) {
+	if (!rWindow.ContainsPoint(static_cast<int>(_position.x), static_cast<int>(_position.y))) {
 		return;
 	}
 
-	CHAR_INFO charinf{};
-	charinf.Char.AsciiChar = 'M';
-	charinf.Attributes = 0x0E;
-	rWindow.SetChar(_position.x, _position.y, charinf);
 	_sprite.Draw(rWindow, _position.x, _position.y);
-	/*CHAR_INFO charinf{};
-	charinf.Char.AsciiChar = 'M';
-	charinf.Attributes = 0x0E;
-	rWindow.SetChar(_position.x, _position.y, charinf);*/
 }

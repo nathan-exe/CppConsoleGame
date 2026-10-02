@@ -4,7 +4,7 @@ class Ship;
 class Missile : public Entity
 {
 public:
-	Missile();
+	Missile(const Ship* owner,WORD color);
 	
 	void Launch(Vector2 velocity, Vector2 spawnPosition);
 
@@ -13,6 +13,6 @@ public:
 
 private:
 	Sprite _sprite;
-	Ship* _pOwner;
+	const Ship* _pOwner;
 	const float _maxVelocity = 50;
 };

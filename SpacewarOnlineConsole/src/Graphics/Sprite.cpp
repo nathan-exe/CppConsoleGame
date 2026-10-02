@@ -53,14 +53,15 @@ Sprite::Sprite(int sizeX, int sizeY, std::vector<CHAR_INFO> display)
 
 void Sprite::Draw(GameWindow& rWindow, int positionX, int positionY)
 {
-	int cornerX = positionX - (_width / 2);
-	int cornerY = positionY - (_height / 2);
+	const int cornerX = positionX - (_width / 2);
+	const int cornerY = positionY - (_height / 2);
 
-	COORD size = rWindow.GetBufferSize();
+	const COORD size = rWindow.GetBufferSize();
 
 	for (int y = 0; y <  _height; y++) {
-		for (int x = 0; x < _width; x++) {
-			if (!((cornerX + x < 0 || cornerX > size.X) || (cornerY + y < 0 || cornerY + y > size.Y))) {
+		for (int x = 0; x < _width; x++) 
+		{
+			if (rWindow.ContainsPoint(cornerX + x, cornerY + y)) {
 				rWindow.SetChar(cornerX + x, cornerY + y, _charData[x + y * _width]);
 			}
 		}

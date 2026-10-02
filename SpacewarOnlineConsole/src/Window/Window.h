@@ -31,10 +31,13 @@ public:
 	void Update();
 
 	//display
-	void BeginFrame();
-	void SetChar(int x, int y, CHAR_INFO caracterInfo);
+	void Clear();
 	void Blit(CHAR_INFO* background);
+	void SetChar(int x, int y, CHAR_INFO caracterInfo);
 	void EndFrame();
+
+	inline bool ContainsPoint(int x, int y) const { return x >= 0 && y >= 0 && x < _bufferSize.X && y < _bufferSize.Y; }
+
 
 	//getters
 	inline const KeyboardInputData* const GetInputs() const { return &_inputs; }

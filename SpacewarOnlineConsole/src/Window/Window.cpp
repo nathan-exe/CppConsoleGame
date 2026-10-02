@@ -71,13 +71,20 @@ void GameWindow::Update() {
 }
 
 #pragma region Display
-void GameWindow::BeginFrame()
+void GameWindow::Clear()
 {    
     //clear buffer
     memset(_buffer, 0, _bufferSize.Y * _bufferSize.X * sizeof(CHAR_INFO));
 }
 
 void GameWindow::SetChar(int x, int y, CHAR_INFO caracterInfo) {
+
+#ifdef _DEBUG
+    if (!ContainsPoint(x,y))
+        throw std::out_of_range("Can't write characters outside of the window's rect.");
+#endif 
+
+
 	*(_buffer + y * _bufferSize.X + x) = caracterInfo;
 }
 
