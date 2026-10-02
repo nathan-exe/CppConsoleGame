@@ -8,7 +8,7 @@ class Ship : public Entity
 {
 public : 
 	Ship();
-	void Update(float deltatime, const KeyboardInputData* const inputs) override;
+	void Update(UpdateContext ctx) override;
 	void Draw(GameWindow& rWindow) override;
 
 	std::vector<Missile> GetMissiles();
@@ -18,5 +18,6 @@ private :
 	float const _acceleration = 40;
 
 	std::vector<Missile> _missiles;
+	//todo : const char _inputScheme[5];//up left down right shoot
 };
 

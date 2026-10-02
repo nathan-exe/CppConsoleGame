@@ -8,7 +8,7 @@ public:
 	
 	void Launch(Vector2 velocity, Vector2 spawnPosition);
 
-	void Update(float deltatime, const KeyboardInputData* const inputs) override;
+	void Update(UpdateContext ctx) override;
 	void Draw(GameWindow& rWindow) override;
 
 private:

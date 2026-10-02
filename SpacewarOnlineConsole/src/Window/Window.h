@@ -38,5 +38,5 @@ public:
 
 	//getters
 	inline const KeyboardInputData* const GetInputs() const { return &_inputs; }
-	inline COORD GetBufferSize() { return _bufferSize; }
+	inline COORD GetBufferSize() const { return _bufferSize; }
 };

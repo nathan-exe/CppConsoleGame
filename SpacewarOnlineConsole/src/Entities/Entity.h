@@ -6,10 +6,17 @@
 
 class Entity
 {
+public : 
+
+	struct UpdateContext {
+		float deltatime;
+		const GameWindow& rWindow;
+	};
+
 public :
 	Entity();
 
-	virtual void Update(float deltatime,const KeyboardInputData* const inputs) = 0;
+	virtual void Update(UpdateContext ctx) = 0;
 	virtual void Draw(GameWindow& rWindow) = 0;
 	
 	Entity& SetPosition(Vector2 position);

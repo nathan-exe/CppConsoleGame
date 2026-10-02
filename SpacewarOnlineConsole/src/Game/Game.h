@@ -5,7 +5,7 @@
 
 class Game
 {
-public : 
+public:
     Game();
 
 	void Run();

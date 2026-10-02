@@ -20,8 +20,9 @@ void Game::Run()
 	WindowsTimer timer{};
 	timer.Start();
 
-	while (true) {
-		float timePassed = timer.GetElapsedSeconds(true);
+	while (true) 
+	{
+		float deltaTime = timer.GetElapsedSeconds(true);
 		
 		//=== update game logic ===
 		
@@ -50,20 +51,21 @@ void Game::Run()
 			}
 		}
 
+		int i = 0;
 		for (auto pEntity : _entities) {
+			i++;
 			if(pEntity->IsActive())
-				pEntity->Update(timePassed, _window.GetInputs());
+				pEntity->Update({deltaTime,_window});
 		}
 
 		//=== draw game ===
 
 		_window.BeginFrame();
 		for (auto& rEntity : _entities) {
-			if (rEntity->IsActive()) rEntity->Draw(_window);
+			if (rEntity->IsActive())
+				rEntity->Draw(_window);
 		}
 		_window.EndFrame();
-
-		//todo : end deltatime timer and retrieve value
 	}
 }
 
