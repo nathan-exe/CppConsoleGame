@@ -14,8 +14,8 @@ public :
 	std::vector<Missile> GetMissiles();
 private : 
 	Sprite _sprite;
-	float const _maxVelocity = 10;
-	float const _acceleration = 20;
+	float const _maxVelocity = 20;
+	float const _acceleration = 40;
 
 	std::vector<Missile> _missiles;
 };

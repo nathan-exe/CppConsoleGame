@@ -10,19 +10,19 @@ Ship::Ship()
 	SetActive(true);
 	_missiles.resize(10);
 
-	std::string sprite{ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" };
+	std::string spritedata{ "aaaaaaaaa" };
 
 	std::vector<CHAR_INFO> vector{};
 
-	for (char a : sprite) 
+	for (char a : spritedata) 
 	{
 		CHAR_INFO charinfo{};
-		charinfo.Char.AsciiChar = a;
+		charinfo.Char.AsciiChar = 'o';
 		charinfo.Attributes = FOREGROUND_INTENSITY | FOREGROUND_GREEN | BACKGROUND_GREEN;
 		vector.push_back(charinfo);
 	}
 
-	_sprite = Sprite{ 9, 9, vector};
+	_sprite = Sprite{ 3, 3, vector};
 }
 
 void Ship::Update(float deltatime, const KeyboardInputData* const inputs)

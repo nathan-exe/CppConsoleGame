@@ -15,12 +15,16 @@ void Missile::Launch(Vector2 velocity, Vector2 spawnPosition)
 void Missile::Update(float deltatime, const KeyboardInputData* const inputs)
 {
 	_position = _position + _velocity * deltatime;
-
 	//Check that missile doesnt leave the bounds of the game arena
 }
 
 void Missile::Draw(GameWindow& rWindow)
 {
+
+	if (_position.x < 0 || _position.x >= rWindow.GetBufferSize().X
+		|| _position.y < 0 || _position.y >= rWindow.GetBufferSize().Y)
+		SetActive(false);
+
 	CHAR_INFO charinf{};
 	charinf.Char.AsciiChar = 'M';
 	charinf.Attributes = 0x0E;
