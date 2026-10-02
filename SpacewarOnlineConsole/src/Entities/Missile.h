@@ -12,5 +12,5 @@ public:
 	void Draw(GameWindow& rWindow) override;
 
 private:
-	float const _maxVelocity = 4;
+	float const _maxVelocity = 50;
 };

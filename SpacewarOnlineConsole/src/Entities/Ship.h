@@ -13,7 +13,7 @@ public :
 	std::vector<Missile> GetMissiles();
 private : 
 	CHAR_INFO _sprite;
-	float const _maxVelocity = 12;
+	float const _maxVelocity = 10;
 	float const _acceleration = 20;
 
 	std::vector<Missile> _missiles;

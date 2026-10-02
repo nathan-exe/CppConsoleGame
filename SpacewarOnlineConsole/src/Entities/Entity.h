@@ -13,6 +13,7 @@ public :
 	
 	Entity& SetPosition(Vector2 position);
 	Entity& SetVelocity(Vector2 velocity);
+	void Activate(bool activate);
 
 
 	bool IsActive();
@@ -24,7 +25,6 @@ protected :
 	Vector2 _velocity;
 	Heading _heading;
 
-	void Activate(bool activate);
 	inline std::pair<int, int> GetScreenPosition() {};
 };
 
