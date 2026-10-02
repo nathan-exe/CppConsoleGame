@@ -2,7 +2,7 @@
 #include "src/Window/Window.h"
 #include "src/Maths/Vector2.h"
 #include "src/Enums.h"
-#include <list>
+#include "src/Graphics/Sprite.h"
 
 class Entity
 {
@@ -23,7 +23,7 @@ public :
 	inline float GetCollisionRadius() const { return _collisionRadius; }
 
 protected : 
-
+	Sprite _sprite; //todo : change to be a sprite reference to avoid having 50 identical sprites defined
 	Vector2 _position;
 	Vector2 _oldPosition;//the position of the object on the previous frame
 	Vector2 _velocity;
