@@ -19,12 +19,8 @@ Entity& Entity::SetVelocity(Vector2 velocity)
 	return *this;
 }
 
-bool Entity::IsActive()
-{
-	return _active;
-}
-
-void Entity::Activate(bool activate)
+Entity& Entity::SetActive(bool activate)
 {
 	_active = activate;
+	return *this;
 }

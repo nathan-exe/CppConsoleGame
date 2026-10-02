@@ -9,7 +9,7 @@ void Missile::Launch(Vector2 velocity, Vector2 spawnPosition)
 	this
 		->SetPosition(spawnPosition)
 		.SetVelocity(velocity.WithMagnitude(_maxVelocity))
-		.Activate(true);
+		.SetActive(true);
 }
 
 void Missile::Update(float deltatime, const KeyboardInputData* const inputs)

@@ -1,6 +1,6 @@
 #pragma once
 #include <src/Entities/Entity.h>
-
+class Ship;
 class Missile : public Entity
 {
 public:
@@ -12,5 +12,6 @@ public:
 	void Draw(GameWindow& rWindow) override;
 
 private:
+	Ship* _pOwner;
 	float const _maxVelocity = 50;
 };

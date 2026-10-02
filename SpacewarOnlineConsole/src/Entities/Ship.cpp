@@ -6,7 +6,7 @@
 Ship::Ship()
 	: Entity()
 {
-	Activate(true);
+	SetActive(true);
 	_missiles.resize(10);
 }
 
@@ -14,18 +14,16 @@ void Ship::Update(float deltatime, const KeyboardInputData* const inputs)
 {
 	
 
-	//update movements
-
+	//read inputs
 	Vector2 inputVector;
-
 	inputVector.x = inputs->IsKeyHeld('d') ? 1 : (inputs->IsKeyHeld('q') ? -1 : 0);
 	inputVector.y = inputs->IsKeyHeld('z') ? -1 : (inputs->IsKeyHeld('s') ? 1 : 0);
 
-	//Position
+	//update velocity
 	_velocity = _velocity + (inputVector.GetNormalizedVector() * _acceleration * deltatime);
-
 	_velocity = _velocity.GetMagnitude() > _maxVelocity ? _velocity.WithMagnitude(_maxVelocity) : _velocity;
 
+	//update position
 	_position = _position + _velocity * deltatime;
 
 	//Missiles
@@ -42,6 +40,9 @@ void Ship::Update(float deltatime, const KeyboardInputData* const inputs)
 		_sprite.Attributes = FOREGROUND_INTENSITY | FOREGROUND_GREEN | BACKGROUND_GREEN;
 		_sprite.Char.AsciiChar = sprites[bitmask];
 	}
+
+	//check for collisions
+
 	
 
 }

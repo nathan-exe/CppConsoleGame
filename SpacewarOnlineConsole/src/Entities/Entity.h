@@ -2,6 +2,7 @@
 #include "src/Window/Window.h"
 #include "src/Maths/Vector2.h"
 #include "src/Enums.h"
+#include <list>
 
 class Entity
 {
@@ -13,18 +14,24 @@ public :
 	
 	Entity& SetPosition(Vector2 position);
 	Entity& SetVelocity(Vector2 velocity);
-	void Activate(bool activate);
+	Entity& SetActive(bool activate);
 
+	//getters
+	inline bool IsActive() const { return _active; }
+	inline Vector2 GetPosition() const { return _position; }
+	inline Vector2 GetOldPosition() const { return _position; }
+	inline float GetCollisionRadius() const { return _collisionRadius; }
 
-	bool IsActive();
-private :
-	bool _active;
-	
 protected : 
-	Vector2 _position;
-	Vector2 _velocity;
-	Heading _heading;
 
-	inline std::pair<int, int> GetScreenPosition() {};
+	Vector2 _position;
+	Vector2 _oldPosition;//the position of the object on the previous frame
+	Vector2 _velocity;
+
+	float _collisionRadius;
+
+private:
+	bool _active;
+
 };
 
