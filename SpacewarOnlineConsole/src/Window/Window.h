@@ -24,7 +24,6 @@ private:
 	HWND _consoleWindowHandle;
 
 	KeyboardInputData _inputs;
-
 public:
 	GameWindow();
 	~GameWindow();
@@ -34,6 +33,7 @@ public:
 	//display
 	void BeginFrame();
 	void SetChar(int x, int y, CHAR_INFO caracterInfo);
+	void Blit(CHAR_INFO* background);
 	void EndFrame();
 
 	//getters

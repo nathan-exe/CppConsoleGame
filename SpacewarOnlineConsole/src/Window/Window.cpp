@@ -4,6 +4,7 @@
 #include <vector>
 #include <src/Macros.h>
 #include <iostream>
+#include "src/Graphics/Sprite.h"
 
 GameWindow::GameWindow()
 {
@@ -78,6 +79,11 @@ void GameWindow::BeginFrame()
 
 void GameWindow::SetChar(int x, int y, CHAR_INFO caracterInfo) {
 	*(_buffer + y * _bufferSize.X + x) = caracterInfo;
+}
+
+void GameWindow::Blit(CHAR_INFO* background)
+{
+    memcpy(_buffer, background, _bufferSize.Y * _bufferSize.X * sizeof(CHAR_INFO));
 }
 
 void GameWindow::EndFrame() {

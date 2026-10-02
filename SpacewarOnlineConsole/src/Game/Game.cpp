@@ -15,6 +15,8 @@ Game::Game() {
 
 void Game::Run()
 {
+	Sprite _backgroundSprite{ "background.txt", FOREGROUND_BLUE };
+
 	Ship shipp{};
 
 	WindowsTimer timer{};
@@ -61,6 +63,9 @@ void Game::Run()
 		//=== draw game ===
 
 		_window.BeginFrame();
+
+		_window.Blit(_backgroundSprite.GetData());
+
 		for (auto& rEntity : _entities) {
 			if (rEntity->IsActive())
 				rEntity->Draw(_window);

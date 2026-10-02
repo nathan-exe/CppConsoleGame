@@ -38,7 +38,7 @@ Sprite::Sprite(std::string filename, WORD attributes)
 			
 			charinfo.Char.AsciiChar = a;
 			
-			_sprite.push_back(charinfo);
+			_charData.push_back(charinfo);
 		}
 	}
 	input.close();
@@ -48,7 +48,7 @@ Sprite::Sprite(int sizeX, int sizeY, std::vector<CHAR_INFO> display)
 {
 	_width = sizeX;
 	_height = sizeY;
-	_sprite = display;
+	_charData = display;
 }
 
 void Sprite::Draw(GameWindow& rWindow, int positionX, int positionY)
@@ -61,7 +61,7 @@ void Sprite::Draw(GameWindow& rWindow, int positionX, int positionY)
 	for (int y = 0; y <  _height; y++) {
 		for (int x = 0; x < _width; x++) {
 			if (!((cornerX + x < 0 || cornerX > size.X) || (cornerY + y < 0 || cornerY + y > size.Y))) {
-				rWindow.SetChar(cornerX + x, cornerY + y, _sprite[x + y * _width]);
+				rWindow.SetChar(cornerX + x, cornerY + y, _charData[x + y * _width]);
 			}
 		}
 	}
