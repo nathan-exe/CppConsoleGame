@@ -1,16 +1,17 @@
 #include "Entity.h"
+#include "src/Graphics/Sprite.h"
 #include <src/Game/Game.h>
 
 Entity::Entity(const char* spritePath, WORD color)
 	: _pSprite(new Sprite(spritePath,color)), _ownsSprite(true)
 {
-	Game::GetInstance().RegisterEntity(this);
+	Game::GetSingletonInstance().RegisterEntity(this);
 }
 
 Entity::Entity(Sprite* pSprite)
 	: _pSprite(pSprite), _ownsSprite(false)
 {
-	Game::GetInstance().RegisterEntity(this);
+	Game::GetSingletonInstance().RegisterEntity(this);
 }
 
 Entity::~Entity()

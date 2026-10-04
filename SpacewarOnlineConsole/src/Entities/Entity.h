@@ -1,20 +1,26 @@
 #pragma once
-#include "src/Window/Window.h"
+#include "src/Window/ConsoleWindow.h"
 #include "src/Maths/Vector2.h"
-#include "src/Enums.h"
-#include "src/Graphics/Sprite.h"
-#include "src/Game/Game.h"
+#include <map>
+#include <vector>
+
+class Sprite;
 
 
-
-
+/// <summary>
+/// - An abstract class shared by all game objects.
+/// - Entities are registered into the game's list of entities upon creation.
+/// - They are updated and then drawn each frame if active.
+/// - They have a sprite which gets destroyed with them automatically
+///   if they were the one who created it.
+/// </summary>
 class Entity
 {
 public:
 	struct UpdateContext {
 		float deltatime;
-		const GameWindow& rWindow;
-		std::map<Entity*, std::vector<Entity*>>& rCollidingObjects;
+		const ConsoleWindow& rWindow;
+		std::map<Entity*, std::vector<Entity*>>& rCollidingEntities;
 	};
 
 public :
@@ -23,7 +29,7 @@ public :
 	~Entity();
 
 	virtual void Update(UpdateContext ctx) = 0;
-	virtual void Draw(GameWindow& rWindow) = 0;
+	virtual void Draw(ConsoleWindow& rWindow) = 0;
 	
 	Entity& SetPosition(Vector2 position);
 	Entity& SetVelocity(Vector2 velocity);
@@ -37,16 +43,16 @@ public :
 	inline float GetCollisionRadius() const { return _collisionRadius; }
 
 protected : 
-	Sprite* _pSprite; //todo : change to be a sprite reference to avoid having 50 identical sprites defined
+	Sprite* _pSprite; 
 	Vector2 _position;
-	Vector2 _oldPosition;//the position of the object on the previous frame
+	Vector2 _oldPosition; //the position of the object on the previous frame
 	Vector2 _velocity;
 
-	float _collisionRadius;
+	float _collisionRadius; //a circle-shaped collider
 
 private:
 	bool _active = false;
-	bool _ownsSprite;
+	bool _ownsSprite; //wether the entity created the sprite or received a pointer to it from outside.
 
 };
 

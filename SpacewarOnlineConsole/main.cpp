@@ -4,7 +4,7 @@
 #include <iostream>
 #include <windows.h>
 #include <src/Game/Game.h>
-#include "src/WindowsException.h"
+#include "src/Window/WindowsException.h"
 
 
 int main()

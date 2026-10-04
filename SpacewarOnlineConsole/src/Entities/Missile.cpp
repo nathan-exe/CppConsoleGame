@@ -1,6 +1,10 @@
 #include "Missile.h"
 #include "Ship.h"
 
+Missile::Missile() : Entity(nullptr)
+{
+}
+
 Missile::Missile(const Ship* owner, Sprite* pSprite)
 	: Entity(pSprite),
 	_pOwner(owner)
@@ -24,16 +28,22 @@ void Missile::Update(UpdateContext ctx)
 		SetActive(false);
 
 	//check for collision
-	if(ctx.rCollidingObjects.contains(this))
-		for (auto pOther : ctx.rCollidingObjects.at(this)) {
+	if(ctx.rCollidingEntities.contains(this))
+		for (auto pOther : ctx.rCollidingEntities.at(this)) {
+
+			//if a ship was hit
 			Ship* otherShip = dynamic_cast<Ship*>(pOther);
-			Missile* otherMissile = dynamic_cast<Missile*>(pOther);
 			if (otherShip != nullptr && otherShip!=_pOwner) {
 				SetActive(false);
-				otherShip->TakeDamage();
+				otherShip->TakeDamage(_velocity.GetNormalizedVector()*60,1);
+				continue;
 			}
-			else if (otherMissile != nullptr) {
+			
+			//if another missile was hit
+			Missile* otherMissile = dynamic_cast<Missile*>(pOther);
+			if (otherMissile != nullptr) {
 				SetActive(false);
+				continue;
 			}
 		}
 
@@ -41,7 +51,7 @@ void Missile::Update(UpdateContext ctx)
 	_position = _position + _velocity * ctx.deltatime;
 }
 
-void Missile::Draw(GameWindow& rWindow)
+void Missile::Draw(ConsoleWindow& rWindow)
 {
 	if (!rWindow.ContainsPoint(static_cast<int>(_position.x), static_cast<int>(_position.y))) {
 		return;

@@ -3,7 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
-#include <iostream>
+#include "src/Window/ConsoleWindow.h"
 
 Sprite::Sprite(std::string filename, WORD attributes)
 {
@@ -54,7 +54,7 @@ Sprite::~Sprite()
 		delete[] _charData;
 }
 
-void Sprite::Draw(GameWindow& rWindow, int positionX, int positionY)
+void Sprite::Draw(ConsoleWindow& rWindow, int positionX, int positionY)
 {
 	const int cornerX = positionX - (_width / 2);
 	const int cornerY = positionY - (_height / 2);

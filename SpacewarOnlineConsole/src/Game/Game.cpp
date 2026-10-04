@@ -3,22 +3,22 @@
 #include <wincontypes.h>
 #include <src/Entities/Ship.h>
 #include <src/Entities/Entity.h>
-#include <src/Window/Window.h>
+#include <src/Window/ConsoleWindow.h>
 #include <src/Maths/WindowsTimer.h>
 #include <map>
 #include <iostream>
 
-Game* Game::s_pInstance = nullptr;
+Game* Game::s_pSingletonInstance = nullptr;
 
 Game::Game() 
 : _gameHasEnded (false)
 {
-	s_pInstance = this;
+	s_pSingletonInstance = this;
 }
 
 Game::~Game()
 {
-	s_pInstance = nullptr;
+	s_pSingletonInstance = nullptr;
 }
 
 
@@ -31,8 +31,8 @@ bool Game::RunAndAskForReplay()
 	Sprite _backgroundSprite{ "background.txt", FOREGROUND_BLUE };
 
 	//create player ships
-	Ship player1(FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN, ControlScheme('z', 'q', 's', 'd', 'c'), Vector2(10, _window.GetBufferSize().Y / 2));
-	Ship player2(FOREGROUND_INTENSITY | FOREGROUND_RED, ControlScheme('o', 'k', 'l', 'm', 'n'), Vector2(_window.GetBufferSize().X - 10, _window.GetBufferSize().Y / 2));
+	Ship player1(FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN, ControlScheme('e', 's', 'd', 'f', 'w'), Vector2(10, _window.GetBufferSize().Y / 2));
+	Ship player2(FOREGROUND_INTENSITY | FOREGROUND_RED, ControlScheme('i', 'j', 'k', 'l', ':'), Vector2(_window.GetBufferSize().X - 10, _window.GetBufferSize().Y / 2));
 
 	//start frame timer
 	WindowsTimer frameTimer{};
@@ -47,30 +47,8 @@ bool Game::RunAndAskForReplay()
 		
 		_window.Update();
 
-		//check for colliding entities ( complexity : O(n2/2) )
-		std::map<Entity*, std::vector<Entity*>> collidingEntities;
-		for (int i = 0; i < _entities.size(); i++)
-		{
-			for(int j = i+1;j < _entities.size(); j++)
-			{
-				if (i == j) continue;
-				const Entity& entityA = *_entities[i];
-				const Entity& entityB = *_entities[j];
-				if (!(entityA.IsActive() && entityB.IsActive())) continue;
-
-				//capsule intersection for continuous collision detection between fast moving objects
-				const float distanceBetweenSegments = Vector2::GetDistanceBetweenSegments(
-					{ entityA.GetPosition(),entityA.GetOldPosition() },
-					{ entityB.GetPosition(),entityB.GetOldPosition() }
-				);
-				const bool capsulesIntersectEachother = distanceBetweenSegments <= entityA.GetCollisionRadius() + entityB.GetCollisionRadius();
-			
-				if (capsulesIntersectEachother) {
-					collidingEntities[_entities[i]].push_back(_entities[j]);
-					collidingEntities[_entities[j]].push_back(_entities[i]);
-				}
-			}
-		}
+		//check for colliding entities 
+		std::map<Entity*, std::vector<Entity*>> collidingEntities = GetCollidingEntities();
 
 		//update entities
 		for (auto pEntity : _entities) {
@@ -114,6 +92,40 @@ void Game::UnregisterEntity(Entity* entity) {
 }
 
 
+std::map<Entity*, std::vector<Entity*>> Game::GetCollidingEntities()
+{
+	std::map<Entity*, std::vector<Entity*>> output;
+
+	//for each unique entity pair ( complexity : O(n2/2) )
+	for (int i = 0; i < _entities.size(); i++)
+	{
+		for (int j = i + 1;j < _entities.size(); j++)
+		{
+			if (i == j) continue;
+			const Entity& entityA = *_entities[i];
+			const Entity& entityB = *_entities[j];
+			if (!(entityA.IsActive() && entityB.IsActive())) continue;
+
+			//Check for capsule-capsule intersection
+			//where each capsule is defined by the entity's current and last frame position.
+			//This allows for continuous collision detection between fast moving circular colliders.
+			const float distanceBetweenSegments = Vector2::GetDistanceBetweenSegments(
+				{ entityA.GetPosition(),entityA.GetOldPosition() },
+				{ entityB.GetPosition(),entityB.GetOldPosition() }
+			);
+			const bool capsulesOverlapEachother = distanceBetweenSegments <= entityA.GetCollisionRadius() + entityB.GetCollisionRadius();
+
+			//register overlapping entity pairs
+			if (capsulesOverlapEachother) {
+				output[_entities[i]].push_back(_entities[j]);
+				output[_entities[j]].push_back(_entities[i]);
+			}
+		}
+	}
+
+	return output;
+}
+
 bool Game::ShowVictoryScreenAndAskForReplay()
 {
 	_entities.clear();
@@ -122,9 +134,8 @@ bool Game::ShowVictoryScreenAndAskForReplay()
 	//todo : switch win sprite depending on who won
 	Sprite winSprite{ "win1.txt",BACKGROUND_GREEN };
 
-
-	//_window.Blit(winSprite.GetData());
-	//_window.EndFrame();
+	_window.Blit(winSprite.GetData());
+	_window.EndFrame();
 
 	return GetReplayAnswer();
 }
@@ -134,12 +145,14 @@ bool Game::GetReplayAnswer()
 	_window.ResetInputMode();
 	std::string c;
 
-	std::cout << "Enter \"Replay\" to restart the game.\nEnter \"Stop\" to exit the application."<<std::endl; 
+	std::cout << "Enter \"Replay\" to restart the game.\nEnter \"Stop\" to exit the application."<<std::endl; //(temporaire en attendant un sprite)
 	while (std::cin >> c) {
 		if (c == "Replay")
 			return true;
 		else if (c == "Stop")
 			return false;
 	}
+
+	throw std::runtime_error("Bad cin.");
 	
 }

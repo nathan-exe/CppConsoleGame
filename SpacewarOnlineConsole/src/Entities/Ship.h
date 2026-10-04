@@ -1,19 +1,24 @@
 #pragma once
 #include <src/Entities/Entity.h>
-#include <src/Entities/Missile.h>
 #include <src/Graphics/Sprite.h>
 #include <vector>
-#include <src/Game/ControlScheme/ControlScheme.h>
+#include "src/Game/ControlScheme/ControlScheme.h"
 #include "Healthbar.h"
+#include "src/Entities/Missile.h"
 
+
+/// <summary>
+/// A battle ship controled byb players through keyboard inputs.
+/// it can shoot missiles is destroyable by other ships's missiles.
+/// </summary>
 class Ship : public Entity
 {
 public : 
 	Ship(WORD color,ControlScheme controlScheme, Vector2 startPosition);
 
 	void Update(UpdateContext ctx) override;
-	void Draw(GameWindow& rWindow) override;
-	void TakeDamage();
+	void Draw(ConsoleWindow& rWindow) override;
+	void TakeDamage(Vector2 knockback, int amount);
 
 private : 
 
@@ -22,10 +27,11 @@ private :
 	
 	int _nextMissileIdInPool = 0;
 	bool _wasHoldingShootKeyLastFrame = false;
-	Healthbar _healthbar;
+
+	float _timeSinceLastHit = 100;
 
 	const ControlScheme _controlScheme;
-
+	Healthbar _healthbar;
 	Sprite _sharedMissileSprite;
 	std::vector<Missile> _missilePool;
 

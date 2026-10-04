@@ -5,7 +5,7 @@ Healthbar::Healthbar(int maxHP, bool drawLeftToRight, WORD color)
 {
 }
 
-void Healthbar::Draw(GameWindow& rWindow)
+void Healthbar::Draw(ConsoleWindow& rWindow)
 {
 	CHAR_INFO character{};
 	int x = static_cast<int>(_position.x);

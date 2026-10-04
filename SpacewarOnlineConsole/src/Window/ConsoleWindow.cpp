@@ -1,12 +1,11 @@
 #define _WIN32_WINNT 0x0500
-#include "Window.h"
+#include "src/Window/ConsoleWindow.h"
+#include "src/Window/WindowsException.h"
 #include <array>
 #include <vector>
-#include <src/Macros.h>
 #include <iostream>
-#include "src/Graphics/Sprite.h"
 
-GameWindow::GameWindow()
+ConsoleWindow::ConsoleWindow()
 {
 	//retrieve handles to the console
 	_consoleOutputHandle = (HANDLE)GetStdHandle(STD_OUTPUT_HANDLE);
@@ -40,12 +39,12 @@ GameWindow::GameWindow()
         "Couldn't set console mode.");
 }
 
-GameWindow::~GameWindow()
+ConsoleWindow::~ConsoleWindow()
 {
     delete[] _buffer;
 }
 
-void GameWindow::ResetInputMode()
+void ConsoleWindow::ResetInputMode()
 {
 
     WINDOWS_THROW_IF_FAILED(
@@ -53,7 +52,7 @@ void GameWindow::ResetInputMode()
         "Couldn't set console mode.");
 }
 
-void GameWindow::Update() {
+void ConsoleWindow::Update() {
 
     //fetch number of input events
     DWORD inputBufferSize = 0;
@@ -85,13 +84,13 @@ void GameWindow::Update() {
 }
 
 #pragma region Display
-void GameWindow::Clear()
+void ConsoleWindow::Clear()
 {    
     //clear buffer
     memset(_buffer, 0, _bufferSize.Y * _bufferSize.X * sizeof(CHAR_INFO));
 }
 
-void GameWindow::SetChar(int x, int y, CHAR_INFO caracterInfo) {
+void ConsoleWindow::SetChar(int x, int y, CHAR_INFO caracterInfo) {
 
 #ifdef _DEBUG
     if (!ContainsPoint(x,y))
@@ -102,12 +101,12 @@ void GameWindow::SetChar(int x, int y, CHAR_INFO caracterInfo) {
 	*(_buffer + y * _bufferSize.X + x) = caracterInfo;
 }
 
-void GameWindow::Blit(CHAR_INFO* background)
+void ConsoleWindow::Blit(CHAR_INFO* background)
 {
     memcpy(_buffer, background, _bufferSize.Y * _bufferSize.X * sizeof(CHAR_INFO));
 }
 
-void GameWindow::EndFrame() {
+void ConsoleWindow::EndFrame() {
     //write buffered data into the console
 	WriteConsoleOutput(_consoleOutputHandle, (CHAR_INFO*)_buffer, _bufferSize,
         {0,0}, &_bufferWriteRegion);

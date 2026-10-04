@@ -2,6 +2,7 @@
 #include <exception>
 #include <string>
 #include <sstream>
+#include <windows.h>
 
 // Define a new exception class that
 // inherits from std::exception
@@ -43,3 +44,5 @@ public:
         return _errorCode;
     }
 };
+
+#define WINDOWS_THROW_IF_FAILED(X, msg)  if (X==FALSE) throw WindowsException(#msg)

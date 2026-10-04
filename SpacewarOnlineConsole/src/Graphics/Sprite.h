@@ -1,8 +1,9 @@
 #pragma once
-#include "src/Window/Window.h"
 #include <vector>
 #include <string>
+#include <windows.h>
 
+class ConsoleWindow;
 class Sprite
 {
 public :
@@ -12,7 +13,7 @@ public :
 	Sprite(Sprite&& other) = delete;*/
 	~Sprite();
 
-	void Draw(GameWindow& rWindow, int positionX, int positionY);
+	void Draw(ConsoleWindow& rWindow, int positionX, int positionY);
 
 	//Accessors
 	inline CHAR_INFO* GetData() { return _charData; }

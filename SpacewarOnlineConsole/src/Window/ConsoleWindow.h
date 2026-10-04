@@ -3,13 +3,10 @@
 #include <set>
 #include "Inputs/KeyboardInputData.h"
 
-//120,30 avec maximize avant
-//156,41 avec maximize apres
 
-
-class GameWindow
+class ConsoleWindow
 {
-private:
+private: 
 
 	//screen info
 	COORD _bufferSize;
@@ -27,8 +24,8 @@ private:
 
 	DWORD _startInputMode;
 public:
-	GameWindow();
-	~GameWindow();
+	ConsoleWindow();
+	~ConsoleWindow();
 
 	void ResetInputMode();
 

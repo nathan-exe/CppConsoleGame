@@ -3,6 +3,7 @@
 #include <vector>
 #include <cmath>
 #include <string>
+#include "src/Game/Game.h"
 
 constexpr int MAX_HEALTH = 10;
 
@@ -10,7 +11,9 @@ Ship::Ship(WORD color, ControlScheme controlScheme, Vector2 startPosition)
 	: Entity("PlayerShip.txt", color),
 	_controlScheme(controlScheme),
 	_sharedMissileSprite("Missile.txt",color & (~FOREGROUND_INTENSITY)),
-	_healthbar(MAX_HEALTH,true,color)
+	_healthbar(MAX_HEALTH,true,color),
+	_missilePool(0),
+	_timeSinceLastHit(100)
 {
 	static int shipID = 0;
 
@@ -22,7 +25,7 @@ Ship::Ship(WORD color, ControlScheme controlScheme, Vector2 startPosition)
 
 	//create health bar
 	_healthbar
-		.SetPosition(shipID == 0 ? Vector2(5, 2) : Vector2(Game::GetInstance().GetWindow().GetBufferSize().X-5, 2))
+		.SetPosition(shipID == 0 ? Vector2(5, 2) : Vector2(Game::GetSingletonInstance().GetWindow().GetBufferSize().X-5, 2))
 		.SetActive(true);
 	if (shipID == 1)_healthbar.FlipGraphics();
 
@@ -63,16 +66,26 @@ void Ship::Update(UpdateContext ctx)
 		_missilePool[_nextMissileIdInPool++%_missilePool.size()].Launch(_velocity, _position);
 	}
 	_wasHoldingShootKeyLastFrame = isKeyHeldNow;
+
+	_timeSinceLastHit += ctx.deltatime;
 }
 
-void Ship::Draw(GameWindow& rWindow)
+void Ship::Draw(ConsoleWindow& rWindow)
 {
-	_pSprite->Draw(rWindow, _position.x, _position.y);
+	const float BLINK_DURATION_AFTER_HIT = .5f;
+	if(_timeSinceLastHit> BLINK_DURATION_AFTER_HIT || static_cast<int>(_timeSinceLastHit*20)%2==0) //to blink after taking damage
+		_pSprite->Draw(rWindow, _position.x, _position.y);
 }
 
-void Ship::TakeDamage()
+void Ship::TakeDamage(Vector2 knockback, int amount)
 {
-	_healthbar.Diminish(1);
+	_timeSinceLastHit = 0;
+
+	//add impulse
+	_velocity = _velocity + knockback;
+
+	//diminish health
+	_healthbar.Diminish(amount);
 	if (_healthbar.IsEmpty())
-		Game::GetInstance().End();
+		Game::GetSingletonInstance().End();
 }

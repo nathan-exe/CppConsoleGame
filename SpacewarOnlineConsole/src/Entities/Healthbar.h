@@ -5,13 +5,13 @@ class Healthbar : public Entity
 {
 public :
 	Healthbar(int maxHP, bool drawLeftToRight,WORD color);
-	void Draw(GameWindow& rWindow) override;
+	void Draw(ConsoleWindow& rWindow) override;
 	void Update(UpdateContext ctx) override;
 	void Diminish(char amount);
 	void Replenish(char amount);
 	void FlipGraphics();
 
-	inline bool IsEmpty() { return _hp == 0; }
+	inline bool IsEmpty() const { return _hp == 0; }
 
 private : 
 	const char _maxHP;
