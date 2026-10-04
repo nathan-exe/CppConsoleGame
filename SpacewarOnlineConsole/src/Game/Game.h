@@ -25,7 +25,6 @@ private :
 
     bool _gameHasEnded;
 
-    bool TryEndGame();
     bool PlayVictoryScreen();
     bool TryToReplay();
 };
