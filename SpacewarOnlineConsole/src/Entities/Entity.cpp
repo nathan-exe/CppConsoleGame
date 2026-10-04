@@ -33,6 +33,12 @@ Entity& Entity::SetVelocity(Vector2 velocity)
 	return *this;
 }
 
+Entity& Entity::SetCollisionRadius(float newRadius)
+{
+	_collisionRadius = newRadius;
+	return *this;
+}
+
 Entity& Entity::SetActive(bool activate)
 {
 	_active = activate;

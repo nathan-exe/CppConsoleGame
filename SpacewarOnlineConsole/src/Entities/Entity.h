@@ -3,15 +3,18 @@
 #include "src/Maths/Vector2.h"
 #include "src/Enums.h"
 #include "src/Graphics/Sprite.h"
+#include "src/Game/Game.h"
+
+class Entity;
+struct UpdateContext {
+	float deltatime;
+	const GameWindow& rWindow;
+	std::map<Entity*, std::vector<Entity*>>& rCollidingObjects;
+};
+
 
 class Entity
 {
-public : 
-
-	struct UpdateContext {
-		float deltatime;
-		const GameWindow& rWindow;
-	};
 
 public :
 	Entity(const char* spritePath,WORD color);
@@ -23,6 +26,7 @@ public :
 	
 	Entity& SetPosition(Vector2 position);
 	Entity& SetVelocity(Vector2 velocity);
+	Entity& SetCollisionRadius(float newRadius);
 	Entity& SetActive(bool activate);
 
 	//getters

@@ -38,14 +38,16 @@ void Game::Run()
 		_window.Update();
 
 		//check for colliding entities
-		std::map<Entity*,std::vector<Entity*>> collidingEntities;
+		std::map<Entity*, std::vector<Entity*>> collidingEntities;
 		for (int i = 0; i < _entities.size(); i++)
 		{
 			for(int j = 0;j < _entities.size() - (i+1); j++)
 			{
+				if (i == j) continue;
 				const Entity& entityA = *_entities[i];
 				const Entity& entityB = *_entities[j];
-				
+				if (!(entityA.IsActive() && entityB.IsActive())) continue;
+
 				//capsule intersection for continuous collision detection between fast moving objects
 				const float distanceBetweenSegments = Vector2::GetDistanceBetweenSegments(
 					{ entityA.GetPosition(),entityA.GetOldPosition() },
@@ -63,7 +65,7 @@ void Game::Run()
 		//update entities
 		for (auto pEntity : _entities) {
 			if(pEntity->IsActive())
-				pEntity->Update({deltaTime,_window});
+				pEntity->Update({deltaTime,_window,collidingEntities});
 		}
 
 		//=== draw game ===

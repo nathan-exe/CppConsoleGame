@@ -1,8 +1,10 @@
 #pragma once
 #include <vector>
-#include <src/Window/Window.h>
+#include <map>
+#include "src/Window/Window.h"
 #include "src/Entities/Entity.h"
 
+class Entity;
 class Game
 {
 public:

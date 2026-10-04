@@ -9,8 +9,10 @@ Ship::Ship(WORD color, ControlScheme controlScheme, Vector2 startPosition)
 	_controlScheme(controlScheme),
 	_sharedMissileSprite("Missile.txt",color & (~FOREGROUND_INTENSITY))
 {
-	SetPosition(startPosition);
-	SetActive(true);
+	this->
+		SetPosition(startPosition)
+		.SetCollisionRadius(2.5f)
+		.SetActive(true);
 
 	//allocate a pool of missiles.
 	_missilePool.reserve(20);

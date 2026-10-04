@@ -79,8 +79,8 @@ float Vector2::GetDistanceBetweenSegments(std::pair<Vector2, Vector2> seg0, std:
 {
 	Vector2 A0 = seg0.first;
 	Vector2 B0 = seg0.second;
-	Vector2 A1 = seg0.first;
-	Vector2 B1 = seg0.second;
+	Vector2 A1 = seg1.first;
+	Vector2 B1 = seg1.second;
 
 	float distances[4]{
 		GetDistanceToSegment(A0, A1, B1),

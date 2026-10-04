@@ -16,7 +16,7 @@ public :
 private : 
 
 	float const _maxVelocity = 30;
-	float const _acceleration = 80;
+	float const _acceleration = 120;
 	
 	int _nextMissileIdInPool = 0;
 	bool _wasHoldingShootKeyLastFrame = false;
