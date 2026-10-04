@@ -14,22 +14,24 @@ Ship::Ship(WORD color, ControlScheme controlScheme, Vector2 startPosition)
 {
 	static int shipID = 0;
 
+	//initialize entity
 	this->
 		SetPosition(startPosition)
 		.SetCollisionRadius(2.5f)
 		.SetActive(true);
 
+	//create health bar
 	_healthbar
-		.SetPosition(shipID == 0 ? Vector2(5, 5) : Vector2(Game::GetInstance().GetWindow().GetBufferSize().X-5, 5))
+		.SetPosition(shipID == 0 ? Vector2(5, 2) : Vector2(Game::GetInstance().GetWindow().GetBufferSize().X-5, 2))
 		.SetActive(true);
-	if (shipID % 2 == 1)_healthbar.FlipGraphics();
+	if (shipID == 1)_healthbar.FlipGraphics();
 
 	//allocate a pool of missiles.
 	_missilePool.reserve(20);
 	for(int i = 0; i< 20; i++)
 		_missilePool.emplace_back(this,&_sharedMissileSprite);
 
-	shipID++;
+	shipID=(shipID+1)%2;
 
 }
 
@@ -71,4 +73,6 @@ void Ship::Draw(GameWindow& rWindow)
 void Ship::TakeDamage()
 {
 	_healthbar.Diminish(1);
+	if (_healthbar.IsEmpty())
+		Game::GetInstance().End();
 }

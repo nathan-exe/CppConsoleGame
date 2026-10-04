@@ -24,9 +24,13 @@ private:
 	HWND _consoleWindowHandle;
 
 	KeyboardInputData _inputs;
+
+	DWORD _startInputMode;
 public:
 	GameWindow();
 	~GameWindow();
+
+	void ResetInputMode();
 
 	void Update();
 

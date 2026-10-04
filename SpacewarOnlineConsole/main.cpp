@@ -6,17 +6,19 @@
 #include <src/Game/Game.h>
 #include "src/WindowsException.h"
 
+
 int main()
 {
-	try {
+
+    try {
         bool isPlaying = true;
         while (isPlaying) {
             Game game{};
-            isPlaying = !game.Run();
+            isPlaying = game.RunAndAskForReplay();
         }
-	}
+    }
     //catch windows related exceptions
-	catch (WindowsException e) {
+    catch (WindowsException e) {
         MessageBoxA(NULL, e.what(), "Error", MB_OK);
         return (e.GetErrorCode());
     }
@@ -26,6 +28,8 @@ int main()
         MessageBoxA(NULL, e.what(), "Error", MB_OK);
         return EXIT_FAILURE;
     }
+
+	
 
     return EXIT_SUCCESS;
 	

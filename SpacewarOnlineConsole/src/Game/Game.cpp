@@ -6,21 +6,31 @@
 #include <src/Window/Window.h>
 #include <src/Maths/WindowsTimer.h>
 #include <map>
+#include <iostream>
 
-Game* Game::instance = nullptr;
+Game* Game::s_pInstance = nullptr;
 
-Game::Game() {
-	instance = this;
-	_gameHasEnded = false;
+Game::Game() 
+: _gameHasEnded (false)
+{
+	s_pInstance = this;
 }
 
-bool Game::Run()
+Game::~Game()
+{
+	s_pInstance = nullptr;
+}
+
+
+
+bool Game::RunAndAskForReplay()
 {
 	// === Game Initialisation ===
 
 	//load sprites
 	Sprite _backgroundSprite{ "background.txt", FOREGROUND_BLUE };
 
+	//create player ships
 	Ship player1(FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN, ControlScheme('z', 'q', 's', 'd', 'c'), Vector2(10, _window.GetBufferSize().Y / 2));
 	Ship player2(FOREGROUND_INTENSITY | FOREGROUND_RED, ControlScheme('o', 'k', 'l', 'm', 'n'), Vector2(_window.GetBufferSize().X - 10, _window.GetBufferSize().Y / 2));
 
@@ -78,13 +88,16 @@ bool Game::Run()
 		}
 		_window.EndFrame();
 
-		//todo : have _gameHasEnded be true only if one of the two ships has been destroyed
-		const KeyboardInputData* victoryInputs = _window.GetInputs();
-		if (victoryInputs->IsKeyHeld('w')) {
-			_gameHasEnded = true;
-		}
+
 	}
-	return PlayVictoryScreen();
+
+	bool playAgain = ShowVictoryScreenAndAskForReplay();
+	return playAgain;
+}
+
+void Game::End()
+{
+	_gameHasEnded = true;
 }
 
 void Game::RegisterEntity(Entity* entity) {
@@ -101,7 +114,7 @@ void Game::UnregisterEntity(Entity* entity) {
 }
 
 
-bool Game::PlayVictoryScreen()
+bool Game::ShowVictoryScreenAndAskForReplay()
 {
 	_entities.clear();
 	_window.Clear();
@@ -110,26 +123,23 @@ bool Game::PlayVictoryScreen()
 	Sprite winSprite{ "win1.txt",BACKGROUND_GREEN };
 
 
-	_window.Blit(winSprite.GetData());
-	_window.EndFrame();
+	//_window.Blit(winSprite.GetData());
+	//_window.EndFrame();
 
-	while (true) {
-		if (TryToReplay()) break;
-	}
-	return _gameHasEnded;
+	return GetReplayAnswer();
 }
 
-bool Game::TryToReplay()
+bool Game::GetReplayAnswer()
 {
-	_window.Update();
-	const KeyboardInputData* victoryInputs = _window.GetInputs();
-	if (victoryInputs->IsKeyHeld(' ')) {
-		_gameHasEnded = false;
-		return true;
+	_window.ResetInputMode();
+	std::string c;
+
+	std::cout << "Enter \"Replay\" to restart the game.\nEnter \"Stop\" to exit the application."<<std::endl; 
+	while (std::cin >> c) {
+		if (c == "Replay")
+			return true;
+		else if (c == "Stop")
+			return false;
 	}
-	if (victoryInputs->IsKeyHeld('x')) {
-		_gameHasEnded = true;
-		return true;
-	}
-	return false;
+	
 }

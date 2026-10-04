@@ -28,7 +28,13 @@ GameWindow::GameWindow()
     _bufferWriteRegion = {0,0,_bufferSize.X,_bufferSize.Y };
     _buffer = new CHAR_INFO[_bufferSize.X * _bufferSize.Y];
 
-	//enable keyboard inputs
+    //enable keyboard inputs
+
+    WINDOWS_THROW_IF_FAILED(
+        GetConsoleMode(_consoleInputHandle, &_startInputMode),
+        "couldn't get console mode."
+    );
+
     WINDOWS_THROW_IF_FAILED(
         SetConsoleMode(_consoleInputHandle, ENABLE_WINDOW_INPUT | ENABLE_PROCESSED_INPUT),
         "Couldn't set console mode.");
@@ -37,6 +43,14 @@ GameWindow::GameWindow()
 GameWindow::~GameWindow()
 {
     delete[] _buffer;
+}
+
+void GameWindow::ResetInputMode()
+{
+
+    WINDOWS_THROW_IF_FAILED(
+        SetConsoleMode(_consoleInputHandle, _startInputMode),
+        "Couldn't set console mode.");
 }
 
 void GameWindow::Update() {
