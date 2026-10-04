@@ -4,8 +4,9 @@
 #include <sstream>
 #include <windows.h>
 
-// Define a new exception class that
-// inherits from std::exception
+/// <summary>
+/// An exception that gets thrown when a windows function fails.
+/// </summary>
 class WindowsException : public std::exception {
 
 private:
