@@ -4,13 +4,14 @@
 #include "src/Window/Window.h"
 #include "src/Entities/Entity.h"
 
+
 class Entity;
 class Game
 {
 public:
     Game();
 
-	void Run();
+	bool Run();
     void RegisterEntity(Entity* entity);
     void UnregisterEntity(Entity* entity);
 
@@ -22,5 +23,9 @@ private :
 	GameWindow _window;
 	std::vector<Entity*> _entities;
 
+    bool _gameHasEnded;
+
+    bool PlayVictoryScreen();
+    bool TryToReplay();
 };
 
