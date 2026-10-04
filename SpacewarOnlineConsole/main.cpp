@@ -9,8 +9,11 @@
 int main()
 {
 	try {
-		Game game{};
-		game.Run();
+        bool isPlaying = true;
+        while (isPlaying) {
+            Game game{};
+            isPlaying = !game.Run();
+        }
 	}
     //catch windows related exceptions
 	catch (WindowsException e) {

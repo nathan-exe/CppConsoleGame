@@ -11,25 +11,25 @@ Game* Game::instance = nullptr;
 
 Game::Game() {
 	instance = this;
+	_gameHasEnded = false;
 }
 
-void Game::Run()
+bool Game::Run()
 {
 	// === Game Initialisation ===
 
 	//load sprites
 	Sprite _backgroundSprite{ "background.txt", FOREGROUND_BLUE };
 
-	//instantiate battle ships
-	Ship player1(FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN,ControlScheme('z','q','s','d','c'),Vector2(10, _window.GetBufferSize().Y/2));
-	Ship player2(FOREGROUND_INTENSITY | FOREGROUND_RED ,ControlScheme('o','k','l','m','n'),Vector2(_window.GetBufferSize().X - 10, _window.GetBufferSize().Y / 2));
+	Ship player1(FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN, ControlScheme('z', 'q', 's', 'd', 'c'), Vector2(10, _window.GetBufferSize().Y / 2));
+	Ship player2(FOREGROUND_INTENSITY | FOREGROUND_RED, ControlScheme('o', 'k', 'l', 'm', 'n'), Vector2(_window.GetBufferSize().X - 10, _window.GetBufferSize().Y / 2));
 
 	//start frame timer
 	WindowsTimer frameTimer{};
 	frameTimer.Start();
 
 	// === Main Game Loop ===
-	while (true) 
+	while (!_gameHasEnded) 
 	{
 		float deltaTime = frameTimer.GetElapsedSeconds(true);
 		
@@ -77,7 +77,14 @@ void Game::Run()
 				rEntity->Draw(_window);
 		}
 		_window.EndFrame();
+
+		//todo : have _gameHasEnded be true only if one of the two ships has been destroyed
+		const KeyboardInputData* victoryInputs = _window.GetInputs();
+		if (victoryInputs->IsKeyHeld('w')) {
+			_gameHasEnded = true;
+		}
 	}
+	return PlayVictoryScreen();
 }
 
 void Game::RegisterEntity(Entity* entity) {
@@ -91,4 +98,38 @@ void Game::UnregisterEntity(Entity* entity) {
 		else
 			i++;
 	}
+}
+
+
+bool Game::PlayVictoryScreen()
+{
+	_entities.clear();
+	_window.Clear();
+
+	//todo : switch win sprite depending on who won
+	Sprite winSprite{ "win1.txt",BACKGROUND_GREEN };
+
+
+	_window.Blit(winSprite.GetData());
+	_window.EndFrame();
+
+	while (true) {
+		if (TryToReplay()) break;
+	}
+	return _gameHasEnded;
+}
+
+bool Game::TryToReplay()
+{
+	_window.Update();
+	const KeyboardInputData* victoryInputs = _window.GetInputs();
+	if (victoryInputs->IsKeyHeld(' ')) {
+		_gameHasEnded = false;
+		return true;
+	}
+	if (victoryInputs->IsKeyHeld('x')) {
+		_gameHasEnded = true;
+		return true;
+	}
+	return false;
 }

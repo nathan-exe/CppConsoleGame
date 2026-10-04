@@ -9,6 +9,7 @@ class Ship : public Entity
 {
 public : 
 	Ship(WORD color,ControlScheme controlScheme, Vector2 startPosition);
+
 	void Update(UpdateContext ctx) override;
 	void Draw(GameWindow& rWindow) override;
 
