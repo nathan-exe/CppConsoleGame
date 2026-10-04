@@ -4,6 +4,7 @@
 #include <src/Graphics/Sprite.h>
 #include <vector>
 #include <src/Game/ControlScheme/ControlScheme.h>
+#include "Healthbar.h"
 
 class Ship : public Entity
 {
@@ -11,8 +12,8 @@ public :
 	Ship(WORD color,ControlScheme controlScheme, Vector2 startPosition);
 	void Update(UpdateContext ctx) override;
 	void Draw(GameWindow& rWindow) override;
+	void TakeDamage();
 
-	std::vector<Missile> GetMissiles();
 private : 
 
 	float const _maxVelocity = 30;
@@ -20,7 +21,8 @@ private :
 	
 	int _nextMissileIdInPool = 0;
 	bool _wasHoldingShootKeyLastFrame = false;
-	
+	Healthbar _healthbar;
+
 	const ControlScheme _controlScheme;
 
 	Sprite _sharedMissileSprite;

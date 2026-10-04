@@ -5,16 +5,17 @@
 #include "src/Graphics/Sprite.h"
 #include "src/Game/Game.h"
 
-class Entity;
-struct UpdateContext {
-	float deltatime;
-	const GameWindow& rWindow;
-	std::map<Entity*, std::vector<Entity*>>& rCollidingObjects;
-};
+
 
 
 class Entity
 {
+public:
+	struct UpdateContext {
+		float deltatime;
+		const GameWindow& rWindow;
+		std::map<Entity*, std::vector<Entity*>>& rCollidingObjects;
+	};
 
 public :
 	Entity(const char* spritePath,WORD color);
@@ -46,7 +47,6 @@ protected :
 private:
 	bool _active = false;
 	bool _ownsSprite;
-
 
 };
 

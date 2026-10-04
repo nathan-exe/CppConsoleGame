@@ -4,20 +4,32 @@
 #include <cmath>
 #include <string>
 
+constexpr int MAX_HEALTH = 10;
+
 Ship::Ship(WORD color, ControlScheme controlScheme, Vector2 startPosition)
 	: Entity("PlayerShip.txt", color),
 	_controlScheme(controlScheme),
-	_sharedMissileSprite("Missile.txt",color & (~FOREGROUND_INTENSITY))
+	_sharedMissileSprite("Missile.txt",color & (~FOREGROUND_INTENSITY)),
+	_healthbar(MAX_HEALTH,true,color)
 {
+	static int shipID = 0;
+
 	this->
 		SetPosition(startPosition)
 		.SetCollisionRadius(2.5f)
 		.SetActive(true);
 
+	_healthbar
+		.SetPosition(shipID == 0 ? Vector2(5, 5) : Vector2(Game::GetInstance().GetWindow().GetBufferSize().X-5, 5))
+		.SetActive(true);
+	if (shipID % 2 == 1)_healthbar.FlipGraphics();
+
 	//allocate a pool of missiles.
 	_missilePool.reserve(20);
 	for(int i = 0; i< 20; i++)
 		_missilePool.emplace_back(this,&_sharedMissileSprite);
+
+	shipID++;
 
 }
 
@@ -56,7 +68,7 @@ void Ship::Draw(GameWindow& rWindow)
 	_pSprite->Draw(rWindow, _position.x, _position.y);
 }
 
-std::vector<Missile> Ship::GetMissiles()
+void Ship::TakeDamage()
 {
-	return _missilePool;
+	_healthbar.Diminish(1);
 }

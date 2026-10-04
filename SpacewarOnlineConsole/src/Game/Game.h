@@ -14,7 +14,8 @@ public:
     void RegisterEntity(Entity* entity);
     void UnregisterEntity(Entity* entity);
 
-    static Game& GetInstance() {return *instance;}
+    inline static Game& GetInstance() {return *instance;}
+    inline GameWindow& GetWindow() { return _window; }
 
 private : 
     static Game* instance;

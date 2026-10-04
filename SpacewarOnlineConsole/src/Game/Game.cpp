@@ -37,11 +37,11 @@ void Game::Run()
 		
 		_window.Update();
 
-		//check for colliding entities
+		//check for colliding entities ( complexity : O(n2/2) )
 		std::map<Entity*, std::vector<Entity*>> collidingEntities;
 		for (int i = 0; i < _entities.size(); i++)
 		{
-			for(int j = 0;j < _entities.size() - (i+1); j++)
+			for(int j = i+1;j < _entities.size(); j++)
 			{
 				if (i == j) continue;
 				const Entity& entityA = *_entities[i];

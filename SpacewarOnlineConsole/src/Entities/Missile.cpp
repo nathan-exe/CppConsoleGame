@@ -30,8 +30,7 @@ void Missile::Update(UpdateContext ctx)
 			Missile* otherMissile = dynamic_cast<Missile*>(pOther);
 			if (otherShip != nullptr && otherShip!=_pOwner) {
 				SetActive(false);
-
-				//todo : win
+				otherShip->TakeDamage();
 			}
 			else if (otherMissile != nullptr) {
 				SetActive(false);
