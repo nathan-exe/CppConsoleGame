@@ -9,6 +9,7 @@
 
 //Include Librairie Statique
 #include "ConsoleWindow.h"
+#include "KeyboardInputData.h"
 
 Game* Game::s_pSingletonInstance = nullptr;
 
@@ -152,16 +153,17 @@ bool Game::ShowVictoryScreenAndAskForReplay(int winnerNumber, WORD winScreenAttr
 
 bool Game::GetReplayAnswer()
 {
-	_window.ResetInputMode();
-	std::string c;
+	while (true) {
+		_window.Update();
+		const WindowLibrary::KeyboardInputData* victoryInputs = _window.GetInputs();
 
-	std::cout << "Enter \"Replay\" to restart the game.\nEnter \"Stop\" to exit the application."<<std::endl; //(temporaire en attendant un sprite)
-	while (std::cin >> c) {
-		if (c == "Replay")
-			return true;
-		else if (c == "Stop")
+		if (victoryInputs->IsKeyHeld('r')) return true;
+
+		if (victoryInputs->IsKeyHeld('x')) {
+			_window.Clear();
+			_window.EndFrame();
 			return false;
+		}
+		
 	}
-
-	throw std::runtime_error("Bad cin.");
 }
