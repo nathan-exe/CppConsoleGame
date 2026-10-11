@@ -51,6 +51,11 @@ Vector2 Vector2::operator/(float other)
 	return *this * (1.0f / other);
 }
 
+bool Vector2::operator==(Vector2 other)
+{
+	return (x == other.x) && (y == other.y);
+}
+
 float Vector2::Dot(Vector2 A, Vector2 B)
 {
 	return A.x*B.x+A.y*B.y;

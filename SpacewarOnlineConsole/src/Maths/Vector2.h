@@ -18,6 +18,8 @@ public :
 	Vector2 operator-(Vector2 other);
 	Vector2 operator*(float b);
 	Vector2 operator/(float b);
+
+	bool operator==(Vector2 other);
 	
 	static float Dot(Vector2 A, Vector2 B);
 	static float DistanceBetweenPoints(Vector2 A, Vector2 B);

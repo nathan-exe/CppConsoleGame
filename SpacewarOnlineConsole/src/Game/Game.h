@@ -2,7 +2,6 @@
 #include <vector>
 #include <map>
 #include "src/Entities/Entity.h"
-#include "Typedefs.h"
 
 //Include Librairie Statique
 #include "ConsoleWindow.h"

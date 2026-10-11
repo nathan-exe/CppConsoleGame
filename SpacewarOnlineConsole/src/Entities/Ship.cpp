@@ -63,7 +63,7 @@ void Ship::Update(UpdateContext ctx)
 	//shoot a missile on shoot key pressed
 	bool isKeyHeldNow = inputs->IsKeyHeld(_controlScheme.key_shoot);
 	if (!_wasHoldingShootKeyLastFrame && isKeyHeldNow) {
-		_missilePool[_nextMissileIdInPool++%_missilePool.size()].Launch(_velocity, _position);
+		if(!(_velocity == Vector2())) _missilePool[_nextMissileIdInPool++%_missilePool.size()].Launch(_velocity, _position);
 	}
 	_wasHoldingShootKeyLastFrame = isKeyHeldNow;
 

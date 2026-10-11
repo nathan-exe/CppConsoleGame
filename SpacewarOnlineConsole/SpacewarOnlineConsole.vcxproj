@@ -159,7 +159,6 @@
   <ItemGroup>
     <ClInclude Include="src\Entities\Healthbar.h" />
     <ClInclude Include="src\Game\ControlScheme\ControlScheme.h" />
-    <ClInclude Include="src\Game\Typedefs.h" />
     <ClInclude Include="src\Graphics\Sprite.h" />
     <ClInclude Include="src\Entities\Missile.h" />
     <ClInclude Include="src\Entities\Ship.h" />
