@@ -4,7 +4,7 @@
 #include <windows.h>
 
 //Include Librairie Statique
-#include "WindowLibrary.h"
+#include "ConsoleWindow.h"
 
 class WindowLibrary::ConsoleWindow;
 class Sprite

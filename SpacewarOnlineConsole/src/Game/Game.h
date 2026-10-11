@@ -5,7 +5,7 @@
 #include "Typedefs.h"
 
 //Include Librairie Statique
-#include "WindowLibrary.h"
+#include "ConsoleWindow.h"
 
 /// <summary>
 /// A class that holds all of the game's data and entities.

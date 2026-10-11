@@ -1,17 +1,8 @@
-// WindowLibrary.cpp : Définit les fonctions de la bibliothèque statique.
-//
-
 #include "pch.h"
-#include "framework.h"
-#include "WindowLibrary.h"
+#include "ConsoleWindow.h"
+#include "WindowsException.h"
+#include <windows.h>
 
-void WindowLibrary::KeyboardInputData::SetKeyStatus(char key, bool pressed)
-{
-    if (pressed)
-        _heldKeys.insert(key);
-    else
-        _heldKeys.erase(key);
-}
 
 WindowLibrary::ConsoleWindow::ConsoleWindow()
 {

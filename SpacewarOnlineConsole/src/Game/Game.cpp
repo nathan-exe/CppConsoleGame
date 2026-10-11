@@ -8,7 +8,7 @@
 #include <iostream>
 
 //Include Librairie Statique
-#include "WindowLibrary.h"
+#include "ConsoleWindow.h"
 
 Game* Game::s_pSingletonInstance = nullptr;
 

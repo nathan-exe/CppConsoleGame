@@ -5,7 +5,7 @@
 #include <filesystem>
 
 //Include Librairie Statique
-#include "WindowLibrary.h"
+#include "ConsoleWindow.h"
 
 Sprite::Sprite(std::string filename, WORD attributes)
 {

@@ -6,7 +6,7 @@
 #include <src/Game/Game.h>
 
 //Include Librairie Statique
-#include "WindowLibrary.h"
+#include "WindowsException.h"
 
 int main()
 {

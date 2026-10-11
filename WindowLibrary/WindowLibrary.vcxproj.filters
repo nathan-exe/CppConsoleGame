@@ -21,15 +21,24 @@
     <ClInclude Include="src\pch.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="include\WindowLibrary.h">
+    <ClInclude Include="WindowLibrary\include\KeyboardInputData.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowLibrary\include\ConsoleWindow.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowLibrary\include\WindowsException.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\WindowLibrary.cpp">
+    <ClCompile Include="src\pch.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\pch.cpp">
+    <ClCompile Include="src\KeyboardInputData.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ConsoleWindow.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

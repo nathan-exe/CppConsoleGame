@@ -1,6 +1,5 @@
 #pragma once
 #include <windows.h>
-#include <unordered_set>
 #include <string>
 #include <sstream>
 
@@ -9,62 +8,6 @@
 /// Static Library definining interaction with and display onto the Console Window
 /// </summary>
 namespace WindowLibrary {
-
-	class KeyboardInputData
-	{
-
-	public:
-		KeyboardInputData() = default;
-
-		void SetKeyStatus(char key, bool pressed);
-		inline bool IsKeyHeld(const char key) const { return _heldKeys.contains(key); };
-	private:
-		std::unordered_set<char> _heldKeys{};
-
-	};
-
-
-	class ConsoleWindow
-	{
-	private:
-
-		//screen info
-		COORD _bufferSize;
-		SMALL_RECT _bufferWriteRegion;
-
-		//screen buffer
-		CHAR_INFO* _buffer;
-
-		//console handle
-		HANDLE _consoleOutputHandle;
-		HANDLE _consoleInputHandle;
-		HWND _consoleWindowHandle;
-
-		KeyboardInputData _inputs;
-
-		DWORD _startInputMode;
-	public:
-		ConsoleWindow();
-		~ConsoleWindow();
-
-		void ResetInputMode();
-
-		void Update();
-
-		//display
-		void Clear();
-		void Blit(CHAR_INFO* background);
-		void SetChar(int x, int y, CHAR_INFO caracterInfo);
-		void EndFrame();
-
-		inline bool ContainsPoint(int x, int y) const { return x >= 0 && y >= 0 && x < _bufferSize.X && y < _bufferSize.Y; }
-
-
-		//getters
-		inline const KeyboardInputData* const GetInputs() const { return &_inputs; }
-		inline COORD GetBufferSize() const { return _bufferSize; }
-	};
-
 	/// <summary>
 	/// An exception that gets thrown when a windows function fails.
 	/// </summary>
@@ -107,6 +50,5 @@ namespace WindowLibrary {
 		}
 	};
 
-	#define WINDOWS_THROW_IF_FAILED(X, msg)  if (X==FALSE) throw WindowsException(#msg)
+#define WINDOWS_THROW_IF_FAILED(X, msg)  if (X==FALSE) throw WindowsException(#msg)
 }
-
