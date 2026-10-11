@@ -12,6 +12,7 @@ Sprite::Sprite(std::string filename, WORD attributes)
 	//std::filesystem::path cwd = std::filesystem::current_path() / "filename.txt";
 	//std::ofstream file(cwd.string());
 	//file.close();
+	_attributes = attributes;
 
 	const char SPACE = ':';
 	const char* pathToSprites = "resources/";

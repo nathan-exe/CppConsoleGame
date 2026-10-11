@@ -20,10 +20,12 @@ public :
 
 	//Accessors
 	inline CHAR_INFO* GetData() { return _charData; }
+	inline WORD GetAttributes() { return _attributes; }
 private:
 	int _width;
 	int _height;
 	
+	WORD _attributes;
 	CHAR_INFO* _charData = nullptr; //heap allocated array of char_infos
 };
 

@@ -89,3 +89,13 @@ void Ship::TakeDamage(Vector2 knockback, int amount)
 	if (_healthbar.IsEmpty())
 		Game::GetSingletonInstance().End();
 }
+
+bool Ship::GetIsDestroyed()
+{
+	return _healthbar.IsEmpty();
+}
+
+WORD Ship::GetShipSpriteAttributes()
+{
+	return _pSprite->GetAttributes();
+}

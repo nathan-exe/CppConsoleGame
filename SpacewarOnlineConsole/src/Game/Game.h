@@ -44,7 +44,7 @@ private :
     bool _gameHasEnded;
 
     std::map<Entity*, std::vector<Entity*>> GetCollidingEntities();
-    bool ShowVictoryScreenAndAskForReplay();
+    bool ShowVictoryScreenAndAskForReplay(int winnerNumber, WORD winScreenAttributes);
     bool GetReplayAnswer();
 };
 

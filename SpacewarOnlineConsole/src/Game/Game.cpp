@@ -71,7 +71,12 @@ bool Game::RunAndAskForReplay()
 
 	}
 
-	bool playAgain = ShowVictoryScreenAndAskForReplay();
+	bool player1Lost = player1.GetIsDestroyed();
+
+	int winnerNumber = player1Lost ? 2 : 1;
+	WORD winScreenAttributes = player1Lost ? player2.GetShipSpriteAttributes() : player1.GetShipSpriteAttributes();
+
+	bool playAgain = ShowVictoryScreenAndAskForReplay(winnerNumber, winScreenAttributes);
 	return playAgain;
 }
 
@@ -128,13 +133,16 @@ std::map<Entity*, std::vector<Entity*>> Game::GetCollidingEntities()
 	return output;
 }
 
-bool Game::ShowVictoryScreenAndAskForReplay()
+bool Game::ShowVictoryScreenAndAskForReplay(int winnerNumber, WORD winScreenAttributes)
 {
 	_entities.clear();
 	_window.Clear();
 
-	//todo : switch win sprite depending on who won
-	Sprite winSprite{ "win1.txt",BACKGROUND_GREEN };
+	std::string spriteSource = "win1.txt";
+	if (winnerNumber == 2) {
+		spriteSource = "win2.txt";
+	}
+	Sprite winSprite{ spriteSource, winScreenAttributes};
 
 	_window.Blit(winSprite.GetData());
 	_window.EndFrame();
@@ -156,5 +164,4 @@ bool Game::GetReplayAnswer()
 	}
 
 	throw std::runtime_error("Bad cin.");
-	
 }

@@ -20,8 +20,9 @@ public :
 	void Draw(WindowLibrary::ConsoleWindow& rWindow) override;
 	void TakeDamage(Vector2 knockback, int amount);
 
+	bool GetIsDestroyed();
+	WORD GetShipSpriteAttributes();
 private : 
-
 	float const _maxVelocity = 30;
 	float const _acceleration = 120;
 	
