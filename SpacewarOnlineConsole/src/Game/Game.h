@@ -1,11 +1,11 @@
 #pragma once
 #include <vector>
 #include <map>
-#include "src/Window/ConsoleWindow.h"
 #include "src/Entities/Entity.h"
 #include "Typedefs.h"
 
-
+//Include Librairie Statique
+#include "WindowLibrary.h"
 
 /// <summary>
 /// A class that holds all of the game's data and entities.
@@ -33,12 +33,12 @@ public:
     void UnregisterEntity(Entity* entity);
 
     //getters
-    inline ConsoleWindow& GetWindow() { return _window; }
+    inline WindowLibrary::ConsoleWindow& GetWindow() { return _window; }
     inline static Game& GetSingletonInstance() {return *s_pSingletonInstance;}
 
 private : 
     static Game* s_pSingletonInstance;
-	ConsoleWindow _window;
+	WindowLibrary::ConsoleWindow _window;
 	std::vector<Entity*> _entities;
 
     bool _gameHasEnded;

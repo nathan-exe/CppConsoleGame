@@ -1,8 +1,10 @@
 #pragma once
-#include "src/Window/ConsoleWindow.h"
 #include "src/Maths/Vector2.h"
 #include <map>
 #include <vector>
+
+//Include Librairie Statique
+#include "WindowLibrary.h"
 
 class Sprite;
 
@@ -19,7 +21,7 @@ class Entity
 public:
 	struct UpdateContext {
 		float deltatime;
-		const ConsoleWindow& rWindow;
+		const WindowLibrary::ConsoleWindow& rWindow;
 		std::map<Entity*, std::vector<Entity*>>& rCollidingEntities;
 	};
 
@@ -29,7 +31,7 @@ public :
 	~Entity();
 
 	virtual void Update(UpdateContext ctx) = 0;
-	virtual void Draw(ConsoleWindow& rWindow) = 0;
+	virtual void Draw(WindowLibrary::ConsoleWindow& rWindow) = 0;
 	
 	Entity& SetPosition(Vector2 position);
 	Entity& SetVelocity(Vector2 velocity);

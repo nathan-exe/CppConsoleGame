@@ -1,15 +1,23 @@
-#define _WIN32_WINNT 0x0500
-#include "src/Window/ConsoleWindow.h"
-#include "src/Window/WindowsException.h"
-#include <array>
-#include <vector>
-#include <iostream>
+// WindowLibrary.cpp : Définit les fonctions de la bibliothèque statique.
+//
 
-ConsoleWindow::ConsoleWindow()
+#include "pch.h"
+#include "framework.h"
+#include "WindowLibrary.h"
+
+void WindowLibrary::KeyboardInputData::SetKeyStatus(char key, bool pressed)
 {
-	//retrieve handles to the console
-	_consoleOutputHandle = (HANDLE)GetStdHandle(STD_OUTPUT_HANDLE);
-	_consoleInputHandle = (HANDLE)GetStdHandle(STD_INPUT_HANDLE);
+    if (pressed)
+        _heldKeys.insert(key);
+    else
+        _heldKeys.erase(key);
+}
+
+WindowLibrary::ConsoleWindow::ConsoleWindow()
+{
+    //retrieve handles to the console
+    _consoleOutputHandle = (HANDLE)GetStdHandle(STD_OUTPUT_HANDLE);
+    _consoleInputHandle = (HANDLE)GetStdHandle(STD_INPUT_HANDLE);
     _consoleWindowHandle = GetParent(GetConsoleWindow());
 
     //resize console window
@@ -24,7 +32,7 @@ ConsoleWindow::ConsoleWindow()
     WINDOWS_THROW_IF_FAILED(
         SetConsoleDisplayMode(_consoleOutputHandle, flags, &_bufferSize),
         "couldn't set console display mode.");
-    _bufferWriteRegion = {0,0,_bufferSize.X,_bufferSize.Y };
+    _bufferWriteRegion = { 0,0,_bufferSize.X,_bufferSize.Y };
     _buffer = new CHAR_INFO[_bufferSize.X * _bufferSize.Y];
 
     //enable keyboard inputs
@@ -39,12 +47,12 @@ ConsoleWindow::ConsoleWindow()
         "Couldn't set console mode.");
 }
 
-ConsoleWindow::~ConsoleWindow()
+WindowLibrary::ConsoleWindow::~ConsoleWindow()
 {
     delete[] _buffer;
 }
 
-void ConsoleWindow::ResetInputMode()
+void WindowLibrary::ConsoleWindow::ResetInputMode()
 {
 
     WINDOWS_THROW_IF_FAILED(
@@ -52,7 +60,7 @@ void ConsoleWindow::ResetInputMode()
         "Couldn't set console mode.");
 }
 
-void ConsoleWindow::Update() {
+void WindowLibrary::ConsoleWindow::Update() {
 
     //fetch number of input events
     DWORD inputBufferSize = 0;
@@ -65,7 +73,7 @@ void ConsoleWindow::Update() {
 
     //allocate input buffer
     std::vector<INPUT_RECORD> inputBuffer(inputBufferSize);
-    
+
     //fetch console inputs into input buffer
     DWORD inputReadsCount;
     WINDOWS_THROW_IF_FAILED(
@@ -84,32 +92,31 @@ void ConsoleWindow::Update() {
 }
 
 #pragma region Display
-void ConsoleWindow::Clear()
-{    
+void WindowLibrary::ConsoleWindow::Clear()
+{
     //clear buffer
     memset(_buffer, 0, _bufferSize.Y * _bufferSize.X * sizeof(CHAR_INFO));
 }
 
-void ConsoleWindow::SetChar(int x, int y, CHAR_INFO caracterInfo) {
+void WindowLibrary::ConsoleWindow::SetChar(int x, int y, CHAR_INFO caracterInfo) {
 
 #ifdef _DEBUG
-    if (!ContainsPoint(x,y))
+    if (!ContainsPoint(x, y))
         throw std::out_of_range("Can't write characters outside of the window's rect.");
 #endif 
 
 
-	*(_buffer + y * _bufferSize.X + x) = caracterInfo;
+    * (_buffer + y * _bufferSize.X + x) = caracterInfo;
 }
 
-void ConsoleWindow::Blit(CHAR_INFO* background)
+void WindowLibrary::ConsoleWindow::Blit(CHAR_INFO* background)
 {
     memcpy(_buffer, background, _bufferSize.Y * _bufferSize.X * sizeof(CHAR_INFO));
 }
 
-void ConsoleWindow::EndFrame() {
+void WindowLibrary::ConsoleWindow::EndFrame() {
     //write buffered data into the console
-	WriteConsoleOutput(_consoleOutputHandle, (CHAR_INFO*)_buffer, _bufferSize,
-        {0,0}, &_bufferWriteRegion);
+    WriteConsoleOutput(_consoleOutputHandle, (CHAR_INFO*)_buffer, _bufferSize,
+        { 0,0 }, &_bufferWriteRegion);
 }
 #pragma endregion
-

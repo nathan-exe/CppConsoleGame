@@ -1,11 +1,12 @@
 #include "Healthbar.h"
 
+
 Healthbar::Healthbar(int maxHP, bool drawLeftToRight, WORD color)
 	: Entity(nullptr) , _hp(maxHP), _maxHP(maxHP), _color(color), _drawLeftToRight(drawLeftToRight)
 {
 }
 
-void Healthbar::Draw(ConsoleWindow& rWindow)
+void Healthbar::Draw(WindowLibrary::ConsoleWindow& rWindow)
 {
 	CHAR_INFO character{};
 	int x = static_cast<int>(_position.x);
@@ -22,8 +23,6 @@ void Healthbar::Draw(ConsoleWindow& rWindow)
 
 	character.Char.AsciiChar = '|';
 	rWindow.SetChar(_drawLeftToRight? x + _maxHP + 1 : x-_maxHP - 1, y, character);
-	
-	
 }
 
 void Healthbar::Update(UpdateContext ctx)

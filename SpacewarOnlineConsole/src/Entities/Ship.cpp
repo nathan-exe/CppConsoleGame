@@ -42,7 +42,7 @@ void Ship::Update(UpdateContext ctx)
 {
 	//read inputs
 	Vector2 inputVector;
-	const KeyboardInputData* inputs = ctx.rWindow.GetInputs();
+	const WindowLibrary::KeyboardInputData* inputs = ctx.rWindow.GetInputs();
 	inputVector.x = inputs->IsKeyHeld(_controlScheme.key_right) ? 1 : (inputs->IsKeyHeld(_controlScheme.key_left) ? -1 : 0);
 	inputVector.y = inputs->IsKeyHeld(_controlScheme.key_up) ? -1 : (inputs->IsKeyHeld(_controlScheme.key_down) ? 1 : 0);
 
@@ -70,7 +70,7 @@ void Ship::Update(UpdateContext ctx)
 	_timeSinceLastHit += ctx.deltatime;
 }
 
-void Ship::Draw(ConsoleWindow& rWindow)
+void Ship::Draw(WindowLibrary::ConsoleWindow& rWindow)
 {
 	const float BLINK_DURATION_AFTER_HIT = .5f;
 	if(_timeSinceLastHit> BLINK_DURATION_AFTER_HIT || static_cast<int>(_timeSinceLastHit*20)%2==0) //to blink after taking damage

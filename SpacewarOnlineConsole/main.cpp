@@ -4,8 +4,9 @@
 #include <iostream>
 #include <windows.h>
 #include <src/Game/Game.h>
-#include "src/Window/WindowsException.h"
 
+//Include Librairie Statique
+#include "WindowLibrary.h"
 
 int main()
 {
@@ -18,7 +19,7 @@ int main()
         }
     }
     //catch windows related exceptions
-    catch (WindowsException e) {
+    catch (WindowLibrary::WindowsException e) {
         MessageBoxA(NULL, e.what(), "Error", MB_OK);
         return (e.GetErrorCode());
     }

@@ -3,7 +3,10 @@
 #include <string>
 #include <windows.h>
 
-class ConsoleWindow;
+//Include Librairie Statique
+#include "WindowLibrary.h"
+
+class WindowLibrary::ConsoleWindow;
 class Sprite
 {
 public :
@@ -13,7 +16,7 @@ public :
 	Sprite(Sprite&& other) = delete;*/
 	~Sprite();
 
-	void Draw(ConsoleWindow& rWindow, int positionX, int positionY);
+	void Draw(WindowLibrary::ConsoleWindow& rWindow, int positionX, int positionY);
 
 	//Accessors
 	inline CHAR_INFO* GetData() { return _charData; }

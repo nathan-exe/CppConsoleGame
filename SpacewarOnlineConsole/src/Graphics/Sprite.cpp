@@ -3,7 +3,9 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
-#include "src/Window/ConsoleWindow.h"
+
+//Include Librairie Statique
+#include "WindowLibrary.h"
 
 Sprite::Sprite(std::string filename, WORD attributes)
 {
@@ -54,7 +56,7 @@ Sprite::~Sprite()
 		delete[] _charData;
 }
 
-void Sprite::Draw(ConsoleWindow& rWindow, int positionX, int positionY)
+void Sprite::Draw(WindowLibrary::ConsoleWindow& rWindow, int positionX, int positionY)
 {
 	const int cornerX = positionX - (_width / 2);
 	const int cornerY = positionY - (_height / 2);

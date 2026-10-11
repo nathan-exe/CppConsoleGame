@@ -80,6 +80,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)WindowLibrary/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -98,6 +99,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)WindowLibrary/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -114,6 +116,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)WindowLibrary/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -132,6 +135,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)WindowLibrary/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -149,8 +153,6 @@
     <ClCompile Include="src\Entities\Entity.cpp" />
     <ClCompile Include="src\Game\Game.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="src\Window\Inputs\KeyboardInputData.cpp" />
-    <ClCompile Include="src\Window\ConsoleWindow.cpp" />
     <ClCompile Include="src\Maths\Vector2.cpp" />
     <ClCompile Include="src\Maths\WindowsTimer.cpp" />
   </ItemGroup>
@@ -163,11 +165,13 @@
     <ClInclude Include="src\Entities\Ship.h" />
     <ClInclude Include="src\Entities\Entity.h" />
     <ClInclude Include="src\Game\Game.h" />
-    <ClInclude Include="src\Window\WindowsException.h" />
-    <ClInclude Include="src\Window\Inputs\KeyboardInputData.h" />
-    <ClInclude Include="src\Window\ConsoleWindow.h" />
     <ClInclude Include="src\Maths\Vector2.h" />
     <ClInclude Include="src\Maths\WindowsTimer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WindowLibrary\WindowLibrary.vcxproj">
+      <Project>{daf8329d-0f0e-41fc-9eb7-81892247a50f}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

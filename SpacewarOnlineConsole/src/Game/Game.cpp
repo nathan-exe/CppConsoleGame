@@ -3,10 +3,12 @@
 #include <wincontypes.h>
 #include <src/Entities/Ship.h>
 #include <src/Entities/Entity.h>
-#include <src/Window/ConsoleWindow.h>
 #include <src/Maths/WindowsTimer.h>
 #include <map>
 #include <iostream>
+
+//Include Librairie Statique
+#include "WindowLibrary.h"
 
 Game* Game::s_pSingletonInstance = nullptr;
 

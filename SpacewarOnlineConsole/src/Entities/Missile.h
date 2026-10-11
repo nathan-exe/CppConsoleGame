@@ -1,5 +1,6 @@
 #pragma once
 #include "src/Entities/Entity.h"
+
 class Ship;
 
 /// <summary>
@@ -14,7 +15,7 @@ public:
 	void Launch(Vector2 velocity, Vector2 spawnPosition);
 
 	void Update(UpdateContext ctx) override;
-	void Draw(ConsoleWindow& rWindow) override;
+	void Draw(WindowLibrary::ConsoleWindow& rWindow) override;
 private:
 	const Ship* _pOwner = nullptr;
 	const float _maxVelocity = 100;

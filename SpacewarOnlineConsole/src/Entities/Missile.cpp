@@ -51,7 +51,7 @@ void Missile::Update(UpdateContext ctx)
 	_position = _position + _velocity * ctx.deltatime;
 }
 
-void Missile::Draw(ConsoleWindow& rWindow)
+void Missile::Draw(WindowLibrary::ConsoleWindow& rWindow)
 {
 	if (!rWindow.ContainsPoint(static_cast<int>(_position.x), static_cast<int>(_position.y))) {
 		return;

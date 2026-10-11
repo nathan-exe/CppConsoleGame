@@ -17,7 +17,7 @@ public :
 	Ship(WORD color,ControlScheme controlScheme, Vector2 startPosition);
 
 	void Update(UpdateContext ctx) override;
-	void Draw(ConsoleWindow& rWindow) override;
+	void Draw(WindowLibrary::ConsoleWindow& rWindow) override;
 	void TakeDamage(Vector2 knockback, int amount);
 
 private : 
