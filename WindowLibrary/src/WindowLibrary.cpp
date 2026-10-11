@@ -85,7 +85,7 @@ void WindowLibrary::ConsoleWindow::Update() {
     {
         //process key event
         if (inputBuffer[i].EventType == KEY_EVENT) {
-            auto key = inputBuffer[inputReadsCount - 1].Event.KeyEvent;
+            auto key = inputBuffer[i].Event.KeyEvent;
             _inputs.SetKeyStatus(key.uChar.AsciiChar, key.bKeyDown);
         }
     }
