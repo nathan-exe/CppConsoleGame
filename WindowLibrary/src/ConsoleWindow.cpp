@@ -11,6 +11,8 @@ WindowLibrary::ConsoleWindow::ConsoleWindow()
     _consoleInputHandle = (HANDLE)GetStdHandle(STD_INPUT_HANDLE);
     _consoleWindowHandle = GetParent(GetConsoleWindow());
 
+    Sleep(50);
+
     //resize console window
     WINDOWS_THROW_IF_FAILED(
         ShowWindow(_consoleWindowHandle, SW_SHOWMAXIMIZED),
