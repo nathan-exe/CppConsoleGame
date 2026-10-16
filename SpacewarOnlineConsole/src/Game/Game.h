@@ -20,14 +20,12 @@ public:
 	/// the whold game is ran into this method.
     /// it returns true if the players ask to play again at the end.
 	/// </summary>
-	/// <returns></returns>
 	bool RunAndAskForReplay();
     void End();
 
     /// <summary>
     /// registers an entity to be updated and drawn each frame.
     /// </summary>
-    /// <param name="entity"></param>
     void RegisterEntity(Entity* entity);
     void UnregisterEntity(Entity* entity);
 

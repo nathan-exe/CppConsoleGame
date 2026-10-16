@@ -24,6 +24,7 @@
     <ProjectGuid>{c0e01bc3-632e-46ff-8d9d-8d12c6cc0b7f}</ProjectGuid>
     <RootNamespace>SpacewarOnlineConsole</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Game</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
